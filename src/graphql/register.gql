@@ -1,0 +1,21 @@
+mutation {
+	registerUser(
+		registrationDetails: {
+			username: "test_user"
+			firstName: "Mark"
+			lastName: "Sahlgreen"
+			email: "1test2@test.com"
+			password: "ThisIsNotAPassword"
+			passwordConfirmation: "ThisIsNotAPassword"
+		}
+		verificationCode: "test_code"
+	) {
+		user {
+			id
+			organizationId
+			email
+			authenticationToken
+		}
+		errors
+	}
+}

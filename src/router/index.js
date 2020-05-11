@@ -4,6 +4,7 @@ import { IonicVueRouter } from '@ionic/vue'
 // Application Views
 import OrderHistory from '../views/OrderHistory.vue'
 import SignIn from '../views/SignIn.vue'
+import RegisterUser from '../views/RegisterUser.vue'
 
 Vue.use(IonicVueRouter)
 
@@ -15,10 +16,9 @@ const routes = [
 		beforeEnter: (to, from, next) => {
 			if (localStorage.authenticationToken) {
 				console.log('you have an auth token')
-				console.log(typeof localStorage.authenticationToken)
 				next()
 			} else {
-				console.log("you don't have permission")
+				console.log('Not logged in')
 				next({ name: 'SignIn' })
 			}
 		}
@@ -27,6 +27,11 @@ const routes = [
 		path: '/signin',
 		name: 'SignIn',
 		component: SignIn
+	},
+	{
+		path: '/register',
+		name: 'RegisterUser',
+		component: RegisterUser
 	}
 ]
 
