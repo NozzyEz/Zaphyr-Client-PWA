@@ -1,29 +1,39 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import { IonicVueRouter } from '@ionic/vue'
 
-Vue.use(VueRouter)
+// Application Views
+import OrderHistory from '../views/OrderHistory.vue'
+import SignIn from '../views/SignIn.vue'
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+Vue.use(IonicVueRouter)
+
+const routes = [
+	{
+		path: '/',
+		name: 'OrderHistory',
+		component: OrderHistory,
+		beforeEnter: (to, from, next) => {
+			if (localStorage.authenticationToken) {
+				console.log('you have an auth token')
+				console.log(typeof localStorage.authenticationToken)
+				next()
+			} else {
+				console.log("you don't have permission")
+				next({ name: 'SignIn' })
+			}
+		}
+	},
+	{
+		path: '/signin',
+		name: 'SignIn',
+		component: SignIn
+	}
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+const router = new IonicVueRouter({
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes
 })
 
 export default router
