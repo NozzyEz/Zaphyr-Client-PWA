@@ -1,0 +1,55 @@
+<template>
+	<div class="ion-page">
+		<ion-header>
+			<ion-toolbar>
+				<ion-buttons slot="start">
+					<ion-back-button default-href="/"></ion-back-button>
+				</ion-buttons>
+				<ion-title>Product Catalogue</ion-title>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content class="ion-padding">
+			<ApolloQuery :query="require('../graphql/products.gql')">
+				<template v-slot="{ result: { loading, error, data } }">
+					<div v-if="loading">Loading in data</div>
+					<div v-if="error">{{ error }}</div>
+					<div v-if="data">
+						<div v-for="product in data.products" :key="product.id">
+							{{ product.name }} - {{ product.price }}
+							<br />
+							{{ product.description }}
+						</div>
+					</div>
+				</template>
+			</ApolloQuery>
+		</ion-content>
+		<ion-footer>
+			<ion-grid>
+				<ion-row>
+					<ion-col>
+						<strong>Total : {{ total }}</strong>
+					</ion-col>
+					<ion-col>
+						<ion-button expand="block">
+							Bestil og Betal
+						</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-footer>
+	</div>
+</template>
+
+<script>
+export default {
+	name: 'ProductCatalogue',
+	data() {
+		return {
+			total: 0,
+		}
+	},
+}
+</script>
+
+<style>
+</style>

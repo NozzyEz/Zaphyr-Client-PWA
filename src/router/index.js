@@ -3,6 +3,7 @@ import { IonicVueRouter } from '@ionic/vue'
 
 // Application Views
 import OrderHistory from '../views/OrderHistory.vue'
+import ProductCatalogue from '../views/ProductCatalogue.vue'
 import SignIn from '../views/SignIn.vue'
 import RegisterUser from '../views/RegisterUser.vue'
 
@@ -22,6 +23,11 @@ const routes = [
 				next({ name: 'SignIn' })
 			}
 		}
+	},
+	{
+		path: '/products',
+		name: 'ProductCatalogue',
+		component: ProductCatalogue
 	},
 	{
 		path: '/signin',

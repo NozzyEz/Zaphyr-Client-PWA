@@ -21,7 +21,12 @@
 		</ion-content>
 		<ion-footer>
 			<div class="ion-padding">
-				<ion-button expand="block" color="success">Ny Bestilling</ion-button>
+				<ion-button
+					@click="$router.push({ name: 'ProductCatalogue' })"
+					expand="block"
+					color="success"
+					>Ny Bestilling</ion-button
+				>
 				<ion-button expand="block" color="primary" fill="outline"
 					>Opdater Profil</ion-button
 				>
@@ -41,8 +46,15 @@ export default {
 	},
 	components: {},
 	methods: {
-		logOut() {
+		clearUser() {
 			delete localStorage.authenticationToken
+			delete localStorage.username
+			delete localStorage.firstName
+			delete localStorage.lastName
+			delete localStorage.email
+		},
+		logOut() {
+			this.clearUser()
 			this.$router.push({ name: 'SignIn' })
 		},
 		onError(error) {
@@ -52,6 +64,7 @@ export default {
 				console.log(error.message)
 				if (error.message.includes('GraphQL error: User not signed in')) {
 					this.$router.push({ name: 'SignIn' })
+					this.clearUser()
 				}
 			}
 			return error

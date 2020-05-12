@@ -13,7 +13,7 @@
 				:variables="{
 					firstName,
 					lastName,
-					userName,
+					username,
 					email,
 					password,
 					passwordConfirmation,
@@ -45,11 +45,11 @@
 							id="lastName"
 						/>
 						<ion-input
-							:value="userName"
-							@input="userName = $event.target.value"
+							:value="username"
+							@input="username = $event.target.value"
 							placeholder="Focus nummer"
-							type="userName"
-							id="userName"
+							type="username"
+							id="username"
 						/>
 						<ion-input
 							:value="email"
@@ -89,7 +89,7 @@ export default {
 		return {
 			firstName: '',
 			lastName: '',
-			userName: '',
+			username: '',
 			email: '',
 			password: '',
 			passwordConfirmation: '',
@@ -97,8 +97,16 @@ export default {
 		}
 	},
 	methods: {
-		onDone() {
-			// Pass
+		onDone(val) {
+			//TODO: Write the method to save the variables to localStorage
+			localStorage.authenticationToken =
+				val.data.registerUser.user.authenticationToken
+			localStorage.email = val.data.registerUser.user.email
+			localStorage.username = val.data.registerUser.user.username
+			localStorage.firstName = val.data.registerUser.user.firstName
+			localStorage.lastName = val.data.registerUser.user.lastName
+
+			this.$router.push({ name: 'OrderHistory' })
 		},
 	},
 }

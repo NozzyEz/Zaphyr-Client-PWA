@@ -38,11 +38,12 @@
 										>Opret Bruger</ion-button
 									>
 									<h3 v-if="error">{{ error }}</h3>
-									<h3 v-if="loading">Loading</h3>
+									<h3 v-if="loading" v-on="onLoad()">
+										{{ loading }}
+									</h3>
 								</form>
 							</template>
 						</ApolloMutation>
-						{{ token }}
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -57,16 +58,33 @@ export default {
 		return {
 			email: '',
 			password: '',
-			token: '',
 		}
 	},
+	watch: {},
 	methods: {
 		onDone(val) {
 			// alert('worked')
 			// Save the token in variable before sending it on to localStorage
-			this.token = val.data.signIn.authenticationToken
-			localStorage.authenticationToken = this.token
+			localStorage.authenticationToken = val.data.signIn.authenticationToken
+			localStorage.email = val.data.signIn.user.email
+			localStorage.username = val.data.signIn.user.username
+			localStorage.firstName = val.data.signIn.user.firstName
+			localStorage.lastName = val.data.signIn.user.lastName
+
 			this.$router.push({ name: 'OrderHistory' })
+		},
+		onLoad() {
+			return this.$ionic.loadingController
+				.create({
+					message: 'Please wait...',
+					duration: this.timeout,
+				})
+				.then(loading => {
+					setTimeout(function() {
+						loading.dismiss()
+					}, this.timeout)
+					return loading.present()
+				})
 		},
 	},
 }

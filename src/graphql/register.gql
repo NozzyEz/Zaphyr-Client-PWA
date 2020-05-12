@@ -1,18 +1,28 @@
-mutation {
+mutation register(
+	$username: String!
+	$firstName: String!
+	$lastName: String!
+	$email: String!
+	$password: String!
+	$passwordConfirmation: String!
+	$verificationCode: String!
+) {
 	registerUser(
 		registrationDetails: {
-			username: "test_user"
-			firstName: "Mark"
-			lastName: "Sahlgreen"
-			email: "1test2@test.com"
-			password: "ThisIsNotAPassword"
-			passwordConfirmation: "ThisIsNotAPassword"
+			username: $username
+			firstName: $firstName
+			lastName: $lastName
+			email: $email
+			password: $password
+			passwordConfirmation: $passwordConfirmation
 		}
-		verificationCode: "test_code"
+		verificationCode: $verificationCode
 	) {
 		user {
 			id
-			organizationId
+			firstName
+			lastName
+			username
 			email
 			authenticationToken
 		}

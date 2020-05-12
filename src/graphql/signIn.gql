@@ -1,5 +1,12 @@
 mutation signIn($email: String!, $password: String!) {
 	signIn(email: $email, password: $password) {
+		user {
+			id
+			username
+			firstName
+			lastName
+			email
+		}
 		authenticationToken
 	}
 }
