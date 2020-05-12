@@ -11,26 +11,29 @@
 						>
 							<template v-slot="{ loading, error, mutate }">
 								<form @submit.prevent="mutate">
-									<ion-input
-										:value="email"
-										@input="email = $event.target.value"
-										placeholder="Email"
-										type="email"
-										id="email"
-									/>
-									<ion-input
-										:value="password"
-										@input="password = $event.target.value"
-										placeholder="password"
-										type="password"
-										id="password"
-									/>
+									<div>
+										<ion-input
+											:value="email"
+											@input="email = $event.target.value"
+											placeholder="Email"
+											type="email"
+											id="email"
+										/>
+										<ion-input
+											:value="password"
+											@input="password = $event.target.value"
+											placeholder="password"
+											type="password"
+											id="password"
+										/>
+									</div>
 									<ion-button @click="mutate()" expand="block"
 										>log Ind</ion-button
 									>
 									<ion-button
 										@click="$router.push({ name: 'RegisterUser' })"
-										color="light"
+										color="primary"
+										fill="outline"
 										expand="block"
 										>Opret Bruger</ion-button
 									>

@@ -22,7 +22,9 @@
 		<ion-footer>
 			<div class="ion-padding">
 				<ion-button expand="block" color="success">Ny Bestilling</ion-button>
-				<ion-button expand="block" color="light">Opdater Profil</ion-button>
+				<ion-button expand="block" color="primary" fill="outline"
+					>Opdater Profil</ion-button
+				>
 				<ion-button @click="logOut" expand="block" color="danger"
 					>Log ud</ion-button
 				>
