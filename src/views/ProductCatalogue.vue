@@ -15,9 +15,7 @@
 					<div v-if="error">{{ error }}</div>
 					<div v-if="data">
 						<div v-for="product in data.products" :key="product.id">
-							{{ product.name }} - {{ product.price }}
-							<br />
-							{{ product.description }}
+							<ProductItem v-bind:product="product" />
 						</div>
 					</div>
 				</template>
@@ -27,7 +25,7 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						<strong>Total : {{ total }}</strong>
+						<strong>Total : {{ total }} DKK</strong>
 					</ion-col>
 					<ion-col>
 						<ion-button expand="block">
@@ -41,8 +39,13 @@
 </template>
 
 <script>
+import ProductItem from '../components/ProductItem'
+
 export default {
 	name: 'ProductCatalogue',
+	components: {
+		ProductItem,
+	},
 	data() {
 		return {
 			total: 0,

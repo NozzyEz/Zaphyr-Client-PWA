@@ -16,7 +16,6 @@ import '@ionic/core/css/core.css'
 import '@ionic/core/css/ionic.bundle.css'
 
 Vue.config.productionTip = false
-Vue.config.ognoredElements = [ 'ion-icons' ]
 
 const httpLink = new HttpLink({
 	uri: 'https://obscure-ocean-47876.herokuapp.com//graphql'
