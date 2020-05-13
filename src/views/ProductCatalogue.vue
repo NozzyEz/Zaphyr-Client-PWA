@@ -9,17 +9,19 @@
 			</ion-toolbar>
 		</ion-header>
 		<ion-content class="ion-padding">
-			<ApolloQuery :query="require('../graphql/products.gql')">
-				<template v-slot="{ result: { loading, error, data } }">
-					<div v-if="loading">Loading in data</div>
-					<div v-if="error">{{ error }}</div>
-					<div v-if="data">
-						<div v-for="product in data.products" :key="product.id">
-							<ProductItem v-bind:product="product" />
+			<ion-list>
+				<ApolloQuery :query="require('../graphql/products.gql')">
+					<template v-slot="{ result: { loading, error, data } }">
+						<div v-if="loading">Loading in data</div>
+						<div v-if="error">{{ error }}</div>
+						<div v-if="data">
+							<div v-for="product in data.products" :key="product.id">
+								<ProductItem v-bind:product="product" />
+							</div>
 						</div>
-					</div>
-				</template>
-			</ApolloQuery>
+					</template>
+				</ApolloQuery>
+			</ion-list>
 		</ion-content>
 		<ion-footer>
 			<ion-grid>
