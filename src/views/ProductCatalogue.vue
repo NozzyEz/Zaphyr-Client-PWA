@@ -70,7 +70,7 @@ export default {
 		async showToast(productName) {
 			const toast = await this.$ionic.toastController.create({
 				message: `${productName} er blevet tilføjet til kurven`,
-				position: 'middle',
+				position: 'top',
 				duration: 3000,
 				showCloseButton: true,
 			})
