@@ -5,7 +5,7 @@
 				<ion-buttons slot="start">
 					<ion-back-button default-href="/"></ion-back-button>
 				</ion-buttons>
-				<ion-title>Product Catalogue</ion-title>
+				<ion-title>Product Menu</ion-title>
 			</ion-toolbar>
 		</ion-header>
 		<ion-content class="ion-padding">
@@ -30,7 +30,7 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						<strong>Total : {{ total }} DKK</strong>
+						<strong>Total : {{ this.$store.state.sumTotal }} DKK</strong>
 					</ion-col>
 					<ion-col>
 						<ion-button expand="block" @click="toCheckout">
@@ -52,24 +52,32 @@ export default {
 		ProductItem,
 	},
 	data() {
-		return {
-			total: 0,
-		}
+		return {}
 	},
 	methods: {
 		addToBasket(entry) {
+			console.log(entry)
+			// TODO Rewrite method to use a map instead of an array
 			let i
+
 			for (i = 0; i < entry[1]; i++) {
-				this.$store.state.newOrder.push(entry[0].id)
+				// Check if the key exist
+				if (!this.$store.state.newOrder[entry[0].id.toString()]) {
+					// If it doesn't, add it and set the value to one
+					this.$store.state.newOrder[entry[0].id.toString()] = 1
+				} else {
+					// if it does, increment the value
+					this.$store.state.newOrder[entry[0].id.toString()] += 1
+				}
+				this.$store.state.sumTotal += entry[0].price
 			}
-			this.total += entry[0].price
-			console.log(`item ${entry[0]} was added ${i} times`)
-			console.log(`Current basket is: ${this.$store.state.newOrder}`)
+			console.log(`item ${entry[0].name} was added ${i} times`)
+			console.log(this.$store.state.newOrder)
 			const msg = `${entry[0].name} er blevet tilføjet til kurven`
 			this.showToast(msg)
 		},
 		toCheckout() {
-			if (this.$store.state.newOrder.length !== 0) {
+			if (Object.keys(this.$store.state.newOrder).length !== 0) {
 				this.$router.push({ name: 'OrderCheckout' })
 			} else {
 				const msg = 'Indkøbskurven er tom'

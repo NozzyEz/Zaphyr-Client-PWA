@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		newOrder: []
+		newOrder: {},
+		sumTotal: 0
 	},
 	mutations: {},
 	actions: {},

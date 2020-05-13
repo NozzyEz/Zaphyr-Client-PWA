@@ -9,6 +9,10 @@
 			</ion-toolbar>
 		</ion-header>
 		<ion-content>
+			<!-- <div v-for="item in uniqueItems" :key="item"> -->
+			<CheckoutItem />
+			<!-- </div> -->
+
 			content goes here
 		</ion-content>
 		<ion-footer>
@@ -17,7 +21,7 @@
 					>Betal med MobilePay</ion-button
 				>
 				<ion-button expand="block" color="primary" fill="outline"
-					>Opdater Profil</ion-button
+					>Betal med kontanter</ion-button
 				>
 			</div>
 		</ion-footer>
@@ -25,8 +29,16 @@
 </template>
 
 <script>
+import CheckoutItem from '../components/CheckoutItem'
 export default {
 	name: 'OrderCheckout',
+	components: {
+		CheckoutItem,
+	},
+	data() {
+		return {}
+	},
+	created() {},
 }
 </script>
 
