@@ -16,7 +16,10 @@
 						<div v-if="error">{{ error }}</div>
 						<div v-if="data">
 							<div v-for="product in data.products" :key="product.id">
-								<ProductItem v-bind:product="product" />
+								<ProductItem
+									v-bind:product="product"
+									v-on:add-to-basket="addToBasket"
+								/>
 							</div>
 						</div>
 					</template>
@@ -43,14 +46,6 @@
 <script>
 import ProductItem from '../components/ProductItem'
 
-// import { addIcons } from 'ionicons'
-// import { arrowBack } from 'ionicons/icons'
-
-// addIcons({
-// 	'ios-arrow-back': arrowBack.ios,
-// 	'md-arrow-back': arrowBack.md,
-// })
-
 export default {
 	name: 'ProductCatalogue',
 	components: {
@@ -60,6 +55,15 @@ export default {
 		return {
 			total: 0,
 		}
+	},
+	methods: {
+		addToBasket(entry) {
+			let i
+			for (i = 0; i < entry[1]; i++) {
+				sessionStorage.newOrder.push(entry[0])
+			}
+			console.log(`item ${entry[0]} was added ${i} times`)
+		},
 	},
 }
 </script>

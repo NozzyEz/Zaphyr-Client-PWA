@@ -9,14 +9,12 @@
 			<ion-item>
 				<ion-grid>
 					<ion-row>
-						<ion-col size="8" @click="testMethod(product.id)">
+						<ion-col size="8">
 							{{ product.name }}
 						</ion-col>
 					</ion-row>
 					<ion-row>
-						<ion-col @click="testMethod(product.id)">
-							{{ product.price }} DKK
-						</ion-col>
+						<ion-col> {{ product.price }} DKK </ion-col>
 					</ion-row>
 				</ion-grid>
 				<br />
@@ -50,8 +48,8 @@ export default {
 			console.log(`${input} was pushed`)
 		},
 		addToBasket(id) {
-			// TODO Move this to ProductCatalogue.vue and emit from here instead
-			console.log(`product ${id} has been added to basket`)
+			let entry = [id, 1]
+			this.$emit('add-to-basket', entry)
 		},
 	},
 }

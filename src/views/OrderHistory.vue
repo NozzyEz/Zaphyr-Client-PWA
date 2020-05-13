@@ -21,10 +21,7 @@
 		</ion-content>
 		<ion-footer>
 			<div class="ion-padding">
-				<ion-button
-					@click="$router.push({ name: 'ProductCatalogue' })"
-					expand="block"
-					color="success"
+				<ion-button @click="newOrder" expand="block" color="success"
 					>Ny Bestilling</ion-button
 				>
 				<ion-button expand="block" color="primary" fill="outline"
@@ -46,6 +43,10 @@ export default {
 	},
 	components: {},
 	methods: {
+		newOrder() {
+			if (!sessionStorage.newOrder) sessionStorage.newOrder
+			this.$router.push({ name: 'ProductCatalogue' })
+		},
 		clearUser() {
 			delete localStorage.authenticationToken
 			delete localStorage.username
