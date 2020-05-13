@@ -62,6 +62,7 @@ export default {
 			for (i = 0; i < entry[1]; i++) {
 				this.$store.state.newOrder.push(entry[0].id)
 			}
+			this.total += entry[0].price
 			console.log(`item ${entry[0]} was added ${i} times`)
 			console.log(`Current basket is: ${this.$store.state.newOrder}`)
 			this.showToast(entry[0].name)
