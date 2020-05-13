@@ -60,9 +60,10 @@ export default {
 		addToBasket(entry) {
 			let i
 			for (i = 0; i < entry[1]; i++) {
-				sessionStorage.newOrder.push(entry[0])
+				this.$store.state.newOrder.push(entry[0])
 			}
 			console.log(`item ${entry[0]} was added ${i} times`)
+			console.log(`Current basket is: ${this.$store.state.newOrder}`)
 		},
 	},
 }

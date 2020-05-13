@@ -44,7 +44,6 @@ export default {
 	components: {},
 	methods: {
 		newOrder() {
-			if (!sessionStorage.newOrder) sessionStorage.newOrder
 			this.$router.push({ name: 'ProductCatalogue' })
 		},
 		clearUser() {
