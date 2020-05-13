@@ -15,6 +15,7 @@ import Ionic from '@ionic/vue'
 import '@ionic/core/css/core.css'
 import '@ionic/core/css/ionic.bundle.css'
 import './registerServiceWorker'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -49,7 +50,8 @@ const apolloProvider = new createProvider({
 })
 
 new Vue({
-	router,
-	apolloProvider: apolloProvider,
-	render: (h) => h(App)
+    router,
+    apolloProvider: apolloProvider,
+    store,
+    render: (h) => h(App)
 }).$mount('#app')
