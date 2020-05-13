@@ -43,6 +43,14 @@
 <script>
 import ProductItem from '../components/ProductItem'
 
+// import { addIcons } from 'ionicons'
+// import { arrowBack } from 'ionicons/icons'
+
+// addIcons({
+// 	'ios-arrow-back': arrowBack.ios,
+// 	'md-arrow-back': arrowBack.md,
+// })
+
 export default {
 	name: 'ProductCatalogue',
 	components: {

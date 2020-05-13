@@ -12,16 +12,6 @@
 						<ion-col size="8" @click="testMethod(product.id)">
 							{{ product.name }}
 						</ion-col>
-						<ion-col push="2">
-							<ion-button fill="clear" @click="addToBasket(product.id)">
-								<ion-icon
-									slot="icon-only"
-									name="add-circle"
-									size="large"
-									color="dark"
-								/>
-							</ion-button>
-						</ion-col>
 					</ion-row>
 					<ion-row>
 						<ion-col @click="testMethod(product.id)">
@@ -42,13 +32,15 @@
 
 <script>
 import { addIcons } from 'ionicons'
-import { addCircleOutline, informationCircle } from 'ionicons/icons'
+import { informationCircle, addCircle, addCircleOutline } from 'ionicons/icons'
 
 addIcons({
-	'ios-add-circle': addCircleOutline.ios,
-	'md-add-circle': addCircleOutline.md,
-	'ios-info': informationCircle.ios,
-	'md-info': informationCircle.md,
+	'ios-add-circle': addCircle,
+	'md-add-circle': addCircle,
+	'ios-add-circle-out': addCircleOutline,
+	'md-add-circle-out': addCircleOutline,
+	'ios-info': informationCircle,
+	'md-info': informationCircle,
 })
 export default {
 	name: 'ProductItem',
@@ -66,7 +58,4 @@ export default {
 </script>
 
 <style>
-ion-icon {
-	color: #fff;
-}
 </style>
