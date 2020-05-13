@@ -20,7 +20,7 @@
 				<br />
 			</ion-item>
 			<ion-item-options side="end">
-				<ion-item-option @click="addToBasket(product.id)">
+				<ion-item-option @click="addToBasket(product)">
 					<ion-icon slot="icon-only" name="add-circle" size="large" />
 				</ion-item-option>
 			</ion-item-options>
@@ -47,8 +47,8 @@ export default {
 		testMethod(input) {
 			console.log(`${input} was pushed`)
 		},
-		addToBasket(id) {
-			let entry = [id, 1]
+		addToBasket(product) {
+			let entry = [product, 1]
 			this.$emit('add-to-basket', entry)
 		},
 	},

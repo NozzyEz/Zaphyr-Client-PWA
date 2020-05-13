@@ -60,10 +60,21 @@ export default {
 		addToBasket(entry) {
 			let i
 			for (i = 0; i < entry[1]; i++) {
-				this.$store.state.newOrder.push(entry[0])
+				this.$store.state.newOrder.push(entry[0].id)
 			}
 			console.log(`item ${entry[0]} was added ${i} times`)
 			console.log(`Current basket is: ${this.$store.state.newOrder}`)
+			this.showToast(entry[0].name)
+		},
+		async showToast(productName) {
+			const toast = await this.$ionic.toastController.create({
+				message: `${productName} er blevet tilføjet til kurven`,
+				position: 'middle',
+				duration: 3000,
+				showCloseButton: true,
+			})
+
+			await toast.present()
 		},
 	},
 }
