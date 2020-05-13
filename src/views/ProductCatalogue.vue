@@ -33,7 +33,7 @@
 						<strong>Total : {{ total }} DKK</strong>
 					</ion-col>
 					<ion-col>
-						<ion-button expand="block">
+						<ion-button expand="block" @click="toCheckout">
 							Bestil og Betal
 						</ion-button>
 					</ion-col>
@@ -65,13 +65,22 @@ export default {
 			this.total += entry[0].price
 			console.log(`item ${entry[0]} was added ${i} times`)
 			console.log(`Current basket is: ${this.$store.state.newOrder}`)
-			this.showToast(entry[0].name)
+			const msg = `${entry[0].name} er blevet tilføjet til kurven`
+			this.showToast(msg)
 		},
-		async showToast(productName) {
+		toCheckout() {
+			if (this.$store.state.newOrder.length !== 0) {
+				this.$router.push({ name: 'OrderCheckout' })
+			} else {
+				const msg = 'Indkøbskurven er tom'
+				this.showToast(msg)
+			}
+		},
+		async showToast(msg) {
 			const toast = await this.$ionic.toastController.create({
-				message: `${productName} er blevet tilføjet til kurven`,
+				message: msg,
 				position: 'top',
-				duration: 3000,
+				duration: 2000,
 				showCloseButton: true,
 			})
 
