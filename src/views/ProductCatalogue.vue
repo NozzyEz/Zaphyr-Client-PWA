@@ -3,7 +3,10 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-buttons slot="start">
-					<ion-back-button default-href="/"></ion-back-button>
+					<ion-back-button
+						default-href="/"
+						@click="showToast('testing')"
+					></ion-back-button>
 				</ion-buttons>
 				<ion-title>Product Menu</ion-title>
 			</ion-toolbar>
@@ -16,10 +19,7 @@
 						<div v-if="error">{{ error }}</div>
 						<div v-if="data">
 							<div v-for="product in data.products" :key="product.id">
-								<ProductItem
-									v-bind:product="product"
-									v-on:add-to-basket="addToBasket"
-								/>
+								<ProductItem v-bind:product="product" />
 							</div>
 						</div>
 					</template>
@@ -30,7 +30,7 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						<strong>Total : {{ this.$store.state.sumTotal }} DKK</strong>
+						<strong>Total : {{ total }} DKK</strong>
 					</ion-col>
 					<ion-col>
 						<ion-button expand="block" @click="toCheckout">
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import ProductItem from '../components/ProductItem'
 
 export default {
@@ -51,48 +52,23 @@ export default {
 	components: {
 		ProductItem,
 	},
-	data() {
-		return {}
+	computed: {
+		...mapState({
+			basket: 'newOrder',
+			total: 'sumTotal',
+		}),
 	},
 	methods: {
-		addToBasket(entry) {
-			console.log(entry)
-			// TODO Rewrite method to use a map instead of an array
-			let i
-
-			for (i = 0; i < entry[1]; i++) {
-				// Check if the key exist
-				if (!this.$store.state.newOrder[entry[0].id.toString()]) {
-					// If it doesn't, add it and set the value to one
-					this.$store.state.newOrder[entry[0].id.toString()] = 1
-				} else {
-					// if it does, increment the value
-					this.$store.state.newOrder[entry[0].id.toString()] += 1
-				}
-				this.$store.state.sumTotal += entry[0].price
-			}
-			console.log(`item ${entry[0].name} was added ${i} times`)
-			console.log(this.$store.state.newOrder)
-			const msg = `${entry[0].name} er blevet tilføjet til kurven`
-			this.showToast(msg)
-		},
+		...mapActions({
+			showToast: 'showToast',
+		}),
 		toCheckout() {
-			if (Object.keys(this.$store.state.newOrder).length !== 0) {
+			if (Object.keys(this.basket).length !== 0) {
 				this.$router.push({ name: 'OrderCheckout' })
 			} else {
 				const msg = 'Indkøbskurven er tom'
 				this.showToast(msg)
 			}
-		},
-		async showToast(msg) {
-			const toast = await this.$ionic.toastController.create({
-				message: msg,
-				position: 'top',
-				duration: 2000,
-				showCloseButton: true,
-			})
-
-			await toast.present()
 		},
 	},
 }

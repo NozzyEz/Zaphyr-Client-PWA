@@ -48,8 +48,9 @@ export default {
 			console.log(`${input} was pushed`)
 		},
 		addToBasket(product) {
-			let entry = [product, 1]
-			this.$emit('add-to-basket', entry)
+			let msg = `${product.name} er blevet tilføjet til kurven`
+			let payload = [product, 1, msg]
+			this.$store.dispatch('addToBasket', payload)
 		},
 	},
 }

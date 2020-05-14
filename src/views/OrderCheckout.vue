@@ -9,36 +9,46 @@
 			</ion-toolbar>
 		</ion-header>
 		<ion-content>
-			<!-- <div v-for="item in uniqueItems" :key="item"> -->
-			<CheckoutItem />
-			<!-- </div> -->
-
-			content goes here
+			<ion-list>
+				<div v-for="product in Object.entries(basket)" :key="product[0]">
+					<CheckoutItem v-bind:product="product" />
+				</div>
+			</ion-list>
 		</ion-content>
 		<ion-footer>
-			<div class="ion-padding">
-				<ion-button expand="block" color="primary"
-					>Betal med MobilePay</ion-button
-				>
-				<ion-button expand="block" color="primary" fill="outline"
-					>Betal med kontanter</ion-button
-				>
-			</div>
+			<ion-grid>
+				<ion-row>
+					<strong>Total: {{ total }} DKK</strong>
+				</ion-row>
+				<ion-row>
+					<ion-col>
+						<ion-button expand="block" color="primary"
+							>Betal med MobilePay</ion-button
+						>
+						<ion-button expand="block" color="primary" fill="outline"
+							>Betal med kontanter</ion-button
+						>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 		</ion-footer>
 	</div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import CheckoutItem from '../components/CheckoutItem'
 export default {
 	name: 'OrderCheckout',
 	components: {
 		CheckoutItem,
 	},
-	data() {
-		return {}
+	computed: {
+		...mapState({
+			basket: 'newOrder',
+			total: 'sumTotal',
+		}),
 	},
-	created() {},
 }
 </script>
 
