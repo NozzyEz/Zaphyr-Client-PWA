@@ -91,20 +91,22 @@ export default {
 	methods: {
 		...mapActions({
 			addToBasket: 'addToBasket',
+			removeFromBasket: 'removeFromBasket',
 			showToast: 'showToast',
 		}),
 		addProduct(product) {
 			let msg = `${product.name} er blevet tilføjet til kurven`
 			let payload = [product, 1, msg]
-			this.$store.dispatch('addToBasket', payload)
+			this.addToBasket(payload)
 			this.amount += 1
 		},
 		removeProduct(product) {
 			let msg = `${product.name} er blevet fjernet fra kurven`
 			let payload = [product, 1, msg]
-			this.$store.dispatch('removeFromBasket', payload)
+			this.removeFromBasket(payload)
 			if (this.amount !== 0) this.amount -= 1
 		},
+		// deleteFromOrder(id) {},
 	},
 }
 </script>
