@@ -10,8 +10,8 @@
 		</ion-header>
 		<ion-content>
 			<ion-list>
-				<div v-for="product in Object.entries(basket)" :key="product[0]">
-					<CheckoutItem v-bind:product="product" />
+				<div v-for="id in Object.keys(basket)" :key="id">
+					<CheckoutItem :id="id" />
 				</div>
 			</ion-list>
 		</ion-content>

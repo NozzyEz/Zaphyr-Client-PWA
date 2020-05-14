@@ -1,15 +1,15 @@
 <template>
-	<ApolloQuery :query="require('../graphql/product.gql')" :variables="{ id }">
+	<ApolloQuery
+		:query="require('../graphql/product.gql')"
+		:variables="{ id: parseInt(id) }"
+	>
 		<template v-slot="{ result: { loading, error, data } }">
 			<div v-if="loading">Loading in data</div>
 			<div v-if="error">{{ error }}</div>
 			<div v-if="data">
 				<ion-item-sliding>
 					<ion-item-options side="end">
-						<ion-item-option
-							color="danger"
-							@click="showToast('testing trashcan')"
-						>
+						<ion-item-option color="danger" @click="showToast(amount)">
 							<ion-icon slot="icon-only" name="trash" size="large" />
 						</ion-item-option>
 					</ion-item-options>
@@ -22,7 +22,11 @@
 								<ion-col>
 									<div class="ion-text-end ion-padding-end">
 										<ion-input
-											@input="amount = $event.target.value"
+											@input="
+												amount = isNaN(parseInt($event.target.value))
+													? 0
+													: parseInt($event.target.value)
+											"
 											:value="amount"
 											type="number"
 										></ion-input>
@@ -62,7 +66,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
 import { addIcons } from 'ionicons'
 import { addCircle, removeCircle, trash } from 'ionicons/icons'
 
@@ -77,17 +81,20 @@ addIcons({
 
 export default {
 	name: 'CheckoutItem',
-	props: ['product'],
+	props: ['id'],
 	data() {
 		return {
-			id: parseInt(this.product[0]),
-			amount: this.product[1],
-			// amount: this.basket[this.product[0]],
+			amount: this.$store.state.newOrder[this.id],
 		}
 	},
-	computed: mapState({
-		basket: 'newOrder',
-	}),
+	watch: {
+		amount(newValue, oldValue) {
+			console.log(newValue)
+			console.log(oldValue)
+			// check difference, if positive, add that amount of times addProduct, negative, removeProduct
+		},
+	},
+	computed: {},
 	methods: {
 		...mapActions({
 			addToBasket: 'addToBasket',
