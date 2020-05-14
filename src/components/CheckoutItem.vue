@@ -11,22 +11,34 @@
 								{{ data.product.name }}
 							</ion-col>
 							<ion-col>
-								{{ amount }}
+								<div class="ion-text-end ion-padding-end">
+									<ion-input
+										@input="amount = $event.target.value"
+										:value="amount"
+										type="number"
+									></ion-input>
+								</div>
 							</ion-col>
 						</ion-row>
 						<ion-row>
 							<ion-col> {{ data.product.price * amount }} DKK </ion-col>
-							<ion-col size="6">
-								<ion-button @click="addProduct(data.product)" fill="clear">
-									<ion-icon slot="icon-only" name="add-outline" size="large" />
-								</ion-button>
-								<ion-button @click="removeProduct(data.product)" fill="clear">
-									<ion-icon
-										slot="icon-only"
-										name="remove-circle"
-										size="large"
-									/>
-								</ion-button>
+							<ion-col>
+								<div class="ion-text-end">
+									<ion-button @click="addProduct(data.product)" fill="clear">
+										<ion-icon
+											slot="icon-only"
+											name="add-outline"
+											size="large"
+										/>
+									</ion-button>
+									<ion-button @click="removeProduct(data.product)" fill="clear">
+										<ion-icon
+											slot="icon-only"
+											name="remove-circle"
+											size="large"
+										/>
+									</ion-button>
+								</div>
 							</ion-col>
 						</ion-row>
 					</ion-grid>
@@ -77,5 +89,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+ion-button > div {
+	width: 100%;
+}
 </style>
