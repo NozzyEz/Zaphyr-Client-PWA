@@ -78,9 +78,9 @@ export default {
 		}
 	},
 	watch: {
-		amount(newValue, oldValue) {
-			this.updateProduct(this.product, newValue, oldValue)
-		},
+		// amount(newValue, oldValue) {
+		// 	this.updateProduct(this.product, newValue, oldValue)
+		// },
 	},
 	computed: {
 		amount: {
@@ -89,7 +89,7 @@ export default {
 			},
 			set(val) {
 				val = parseInt(val) || 0
-				this.$store.commit('UPDATE_BASKET', [this.id, val])
+				this.$store.commit('UPDATE_BASKET', [this.product, val])
 			},
 		},
 	},
@@ -121,7 +121,9 @@ export default {
 		},
 	},
 	created() {
+		console.log(this.product)
 		this.product = this.getProduct()
+		console.log(this.product)
 	},
 }
 </script>
