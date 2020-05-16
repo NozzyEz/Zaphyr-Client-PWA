@@ -49,12 +49,17 @@ export default {
 			showToast: 'showToast',
 			updateBasket: 'updateBasket',
 		}),
-		testMethod(input) {
-			console.log(`${input} was pushed`)
-		},
 		addToBasket(product) {
 			let msg = `${product.name} er blevet tilføjet til kurven`
-			let payload = [product, 1, msg]
+
+			//! Fixed
+			let amount = 0
+			if (!this.$store.state.newOrder[product.id]) {
+				amount = 1
+			} else {
+				amount = this.$store.state.newOrder[product.id] + 1
+			}
+			let payload = [product, amount, msg]
 			this.$store.dispatch('updateBasket', payload)
 			console.log(this.$store.state.newOrder)
 		},
