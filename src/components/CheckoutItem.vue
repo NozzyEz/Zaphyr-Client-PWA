@@ -19,15 +19,9 @@
 								<ion-col size="8">
 									{{ data.product.name }}
 								</ion-col>
-								<ion-col>
+								<ion-col size="4">
 									<div class="ion-text-end ion-padding-end">
-										<ion-input
-											:value="amount"
-											:min="0"
-											:max="99"
-											@input="amount = parseInt($event.target.value) || 0"
-											type="number"
-										></ion-input>
+										<input type="number" min="0" v-model.number="amount" />
 									</div>
 								</ion-col>
 							</ion-row>
@@ -35,14 +29,14 @@
 								<ion-col> {{ data.product.price * amount }} DKK </ion-col>
 								<ion-col>
 									<div class="ion-text-end">
-										<ion-button @click="amount += 1" fill="clear">
+										<ion-button @click="amount++" fill="clear">
 											<ion-icon
 												slot="icon-only"
 												name="add-outline"
 												size="large"
 											/>
 										</ion-button>
-										<ion-button @click="amount -= 1" fill="clear">
+										<ion-button @click="amount--" fill="clear">
 											<ion-icon
 												slot="icon-only"
 												name="remove-circle"
@@ -81,49 +75,29 @@ export default {
 		return {
 			pid: parseInt(this.id),
 			product: {},
-			amount: this.$store.getters.getAmount(this.id),
 		}
 	},
 	watch: {
 		amount(newValue, oldValue) {
-			newValue = parseInt(newValue) || 0
-			newValue = newValue < 0 ? 0 : newValue
-
-			let diff = newValue - oldValue
-			// console.log(diff)
-			if (diff > 0) {
-				let i = 0
-				for (i; i < diff; i++) {
-					this.addProduct(this.product, 1)
-				}
-			} else {
-				let i = 0
-				for (i; i < -diff; i++) {
-					this.removeProduct(this.product, 1)
-				}
-			}
-			this.$store.commit('updateAmount', [this.id, newValue])
+			this.updateProduct(this.product, newValue, oldValue)
 		},
 	},
-	computed: {},
+	computed: {
+		amount: {
+			get() {
+				return this.$store.state.newOrder[this.id]
+			},
+			set(val) {
+				val = parseInt(val) || 0
+				this.$store.commit('UPDATE_BASKET', [this.id, val])
+			},
+		},
+	},
 	methods: {
 		...mapActions({
-			addToBasket: 'addToBasket',
-			removeFromBasket: 'removeFromBasket',
 			showToast: 'showToast',
+			updateBasket: 'updateBasket',
 		}),
-		addProduct(product, amount) {
-			let msg = `${product.name} er blevet tilføjet til kurven`
-			let payload = [product, amount, msg]
-			this.addToBasket(payload)
-			amount += 1
-		},
-		removeProduct(product, amount) {
-			let msg = `${product.name} er blevet fjernet fra kurven`
-			let payload = [product, amount, msg]
-			this.removeFromBasket(payload)
-			amount -= 1
-		},
 		// deleteFromOrder(id) {},
 		getProduct() {
 			this.$apollo
@@ -137,10 +111,14 @@ export default {
 					this.product = data.data.product
 				})
 		},
-		// updateAmount(val) {
-		// 	let amount = isNaN(parseInt(val)) ? 0 : parseInt(val)
-		// 	this.$store.commit('updateAmount', [this.id, amount])
-		// },
+		updateProduct(product, newValue, oldValue) {
+			const msg =
+				newValue < oldValue
+					? `${product.name} er blevet fjernet fra kurven`
+					: `${product.name} er blevet tilføjet til kurven`
+			const payload = [product, newValue, msg]
+			this.updateBasket(payload)
+		},
 	},
 	created() {
 		this.product = this.getProduct()
