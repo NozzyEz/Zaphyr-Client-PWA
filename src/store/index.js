@@ -19,6 +19,11 @@ export default new Vuex.Store({
 			const productId = payload[0].id.toString()
 			// console.log(productId)
 			const productAmount = payload[1]
+			if (productAmount > 0) {
+				state.sumTotal += payload[0].price
+			} else {
+				state.sumTotal -= payload[0].price
+			}
 			console.log('UPDATE_BASKET -> productAmount: ', productAmount)
 
 			state.newOrder[productId] = productAmount
