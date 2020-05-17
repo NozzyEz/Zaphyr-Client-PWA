@@ -19,8 +19,11 @@ export default new Vuex.Store({
 			const productId = payload[0].id.toString()
 			// console.log(productId)
 			const productAmount = payload[1]
+			console.log('UPDATE_BASKET -> productAmount: ', productAmount)
 
 			state.newOrder[productId] = productAmount
+			// Trigger reactivity on getter, used in CheckoutItem
+			state.newOrder = { ...state.newOrder }
 		}
 	},
 	actions: {

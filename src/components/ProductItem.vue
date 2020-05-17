@@ -63,8 +63,8 @@ export default {
 			this.$store.dispatch('updateBasket', payload)
 			console.log(this.$store.state.newOrder)
 		},
-		goToDetail(product) {
-			this.$router.push({ name: 'ProductDetail', params: { product } })
+		goToDetail() {
+			this.$router.push({ name: 'ProductDetail' })
 		},
 	},
 }

@@ -10,9 +10,7 @@
 				</ion-title>
 			</ion-toolbar>
 		</ion-header>
-		<ion-content>
-			Product details go here
-		</ion-content>
+		<ion-content> </ion-content>
 		<ion-footer>
 			<ion-grid>
 				<ion-row>
@@ -46,6 +44,7 @@ export default {
 			toCheckout: 'toCheckout',
 		}),
 	},
+	mounted: {},
 }
 </script>
 

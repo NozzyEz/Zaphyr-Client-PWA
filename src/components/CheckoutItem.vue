@@ -21,7 +21,12 @@
 								</ion-col>
 								<ion-col size="4">
 									<div class="ion-text-end ion-padding-end">
-										<input type="number" min="0" v-model.number="amount" />
+										<input
+											ref="amountInput"
+											type="number"
+											min="0"
+											v-model.number="amount"
+										/>
 									</div>
 								</ion-col>
 							</ion-row>
@@ -36,7 +41,10 @@
 												size="large"
 											/>
 										</ion-button>
-										<ion-button @click="amount--" fill="clear">
+										<ion-button
+											@click="amount > 0 ? amount-- : amount"
+											fill="clear"
+										>
 											<ion-icon
 												slot="icon-only"
 												name="remove-circle"
@@ -78,13 +86,14 @@ export default {
 		}
 	},
 	watch: {
-		// amount(newValue, oldValue) {
-		// 	this.updateProduct(this.product, newValue, oldValue)
-		// },
+		amount() {
+			console.log('Watcher amount fired')
+		},
 	},
 	computed: {
 		amount: {
 			get() {
+				console.log('Getter Fired', this.$store.state.newOrder[this.id])
 				return this.$store.state.newOrder[this.id]
 			},
 			set(val) {
