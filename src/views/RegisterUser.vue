@@ -101,6 +101,7 @@ export default {
 			//TODO: Write the method to save the variables to localStorage
 			localStorage.authenticationToken =
 				val.data.registerUser.user.authenticationToken
+			localStorage.uid = val.data.registerUser.user.id
 			localStorage.email = val.data.registerUser.user.email
 			localStorage.username = val.data.registerUser.user.username
 			localStorage.firstName = val.data.registerUser.user.firstName

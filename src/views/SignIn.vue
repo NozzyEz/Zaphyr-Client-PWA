@@ -66,6 +66,7 @@ export default {
 			// alert('worked')
 			// Save the token in variable before sending it on to localStorage
 			localStorage.authenticationToken = val.data.signIn.authenticationToken
+			localStorage.uid = val.data.signIn.user.id
 			localStorage.email = val.data.signIn.user.email
 			localStorage.username = val.data.signIn.user.username
 			localStorage.firstName = val.data.signIn.user.firstName
