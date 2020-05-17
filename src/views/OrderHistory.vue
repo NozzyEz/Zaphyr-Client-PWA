@@ -37,7 +37,11 @@
 				<ion-button @click="newOrder" expand="block" color="success"
 					>Ny Bestilling</ion-button
 				>
-				<ion-button expand="block" color="primary" fill="outline"
+				<ion-button
+					@click="$router.push({ name: 'UpdateProfile' })"
+					expand="block"
+					color="primary"
+					fill="outline"
 					>Opdater Profil</ion-button
 				>
 				<ion-button @click="logOut" expand="block" color="danger"

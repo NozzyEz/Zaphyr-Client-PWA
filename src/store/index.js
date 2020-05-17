@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -36,6 +37,15 @@ export default new Vuex.Store({
 		updateBasket (context, payload) {
 			context.commit('UPDATE_BASKET', payload)
 			context.dispatch('showToast', payload[2])
+		},
+		toCheckout (context) {
+			if (Object.keys(context.state.newOrder).length !== 0) {
+				router.push({ name: 'OrderCheckout' })
+			} else {
+				const msg = 'Indkøbskurven er tom'
+
+				context.dispatch('showToast', msg)
+			}
 		}
 	},
 	modules: {}

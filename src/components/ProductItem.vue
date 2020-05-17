@@ -2,7 +2,7 @@
 	<div>
 		<ion-item-sliding>
 			<ion-item-options side="start">
-				<ion-item-option @click="testMethod(product.id)">
+				<ion-item-option @click="goToDetail(product)">
 					<ion-icon slot="icon-only" name="info" size="large" />
 				</ion-item-option>
 			</ion-item-options>
@@ -62,6 +62,9 @@ export default {
 			let payload = [product, amount, msg]
 			this.$store.dispatch('updateBasket', payload)
 			console.log(this.$store.state.newOrder)
+		},
+		goToDetail(product) {
+			this.$router.push({ name: 'ProductDetail', params: { product } })
 		},
 	},
 }

@@ -58,15 +58,8 @@ export default {
 	methods: {
 		...mapActions({
 			showToast: 'showToast',
+			toCheckout: 'toCheckout',
 		}),
-		toCheckout() {
-			if (Object.keys(this.basket).length !== 0) {
-				this.$router.push({ name: 'OrderCheckout' })
-			} else {
-				const msg = 'Indkøbskurven er tom'
-				this.showToast(msg)
-			}
-		},
 	},
 }
 </script>
