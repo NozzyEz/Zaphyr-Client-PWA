@@ -16,7 +16,7 @@ export default new Vuex.Store({
 	mutations: {
 		UPDATE_BASKET (state, payload) {
 			const productId = payload[0].id.toString()
-			console.log(productId)
+			// console.log(productId)
 			const productAmount = payload[1]
 
 			state.newOrder[productId] = productAmount

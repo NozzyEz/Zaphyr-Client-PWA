@@ -120,11 +120,9 @@ export default {
 			this.updateBasket(payload)
 		},
 	},
-	created() {
-		console.log(this.product)
+	mounted() {
+		// console.log(this.product)
 		this.product = this.getProduct()
-		console.log(this.product)
 	},
 }
 </script>
-
