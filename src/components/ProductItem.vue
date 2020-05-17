@@ -2,7 +2,7 @@
 	<div>
 		<ion-item-sliding>
 			<ion-item-options side="start">
-				<ion-item-option @click="goToDetail(product)">
+				<ion-item-option @click="goToDetail(product.id)">
 					<ion-icon slot="icon-only" name="info" size="large" />
 				</ion-item-option>
 			</ion-item-options>
@@ -48,11 +48,11 @@ export default {
 		...mapActions({
 			showToast: 'showToast',
 			updateBasket: 'updateBasket',
+			updateActiveProduct: 'updateActiveProduct',
 		}),
 		addToBasket(product) {
 			let msg = `${product.name} er blevet tilføjet til kurven`
 
-			//! Fixed
 			let amount = 0
 			if (!this.$store.state.newOrder[product.id]) {
 				amount = 1
@@ -63,7 +63,9 @@ export default {
 			this.$store.dispatch('updateBasket', payload)
 			console.log(this.$store.state.newOrder)
 		},
-		goToDetail() {
+		goToDetail(id) {
+			this.updateActiveProduct(id)
+			console.log(this.$store.state.activeProduct)
 			this.$router.push({ name: 'ProductDetail' })
 		},
 	},

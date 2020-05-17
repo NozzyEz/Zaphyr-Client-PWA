@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		newOrder: {},
-		sumTotal: 0
+		sumTotal: 0,
+		activeProduct: 0
 	},
 	getters: {
 		getAmount: (state) => (id) => {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
 			state.newOrder[productId] = productAmount
 			// Trigger reactivity on getter, used in CheckoutItem
 			state.newOrder = { ...state.newOrder }
+		},
+		updateActiveProduct (state, id) {
+			state.activeProduct = id
 		}
 	},
 	actions: {
@@ -54,6 +58,9 @@ export default new Vuex.Store({
 
 				context.dispatch('showToast', msg)
 			}
+		},
+		updateActiveProduct (context, id) {
+			context.commit('updateActiveProduct', id)
 		}
 	},
 	modules: {}

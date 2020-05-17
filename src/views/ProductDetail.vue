@@ -10,7 +10,23 @@
 				</ion-title>
 			</ion-toolbar>
 		</ion-header>
-		<ion-content> </ion-content>
+		<ion-content>
+			<ApolloQuery
+				:query="require('../graphql/product.gql')"
+				:variables="{ id: pid }"
+			>
+				<template v-slot="{ result: { loading, error, data } }">
+					<div v-if="loading">Loading in data</div>
+					<div v-if="error">{{ error }}</div>
+					<div v-if="data">
+						{{ data.product.id }}
+						{{ data.product.name }}
+						{{ data.product.description }}
+						{{ data.product.price }}
+					</div>
+				</template>
+			</ApolloQuery>
+		</ion-content>
 		<ion-footer>
 			<ion-grid>
 				<ion-row>
@@ -36,6 +52,7 @@ export default {
 	props: ['product'],
 	data() {
 		return {
+			pid: parseInt(this.$store.state.activeProduct),
 			total: this.$store.state.sumTotal,
 		}
 	},
@@ -44,7 +61,6 @@ export default {
 			toCheckout: 'toCheckout',
 		}),
 	},
-	mounted: {},
 }
 </script>
 
