@@ -21,11 +21,17 @@
 								</ion-col>
 								<ion-col size="4">
 									<div class="ion-text-end ion-padding-end">
-										<input
+										<!-- <input
 											ref="amountInput"
 											type="number"
 											min="0"
 											v-model.number="amount"
+										/> -->
+										<ion-input
+											:value="amount"
+											@input="amount = $event.target.value"
+											min="0"
+											type="number"
 										/>
 									</div>
 								</ion-col>

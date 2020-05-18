@@ -1,0 +1,20 @@
+query product($id: Int!) {
+	order(id: $id) {
+		id
+		organization {
+			id
+			name
+		}
+		user {
+			id
+			username
+			email
+		}
+		products {
+			name
+			price
+		}
+		createdAt
+		updatedAt
+	}
+}

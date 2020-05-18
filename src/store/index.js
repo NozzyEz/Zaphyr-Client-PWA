@@ -7,12 +7,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		newOrder: {},
+		activeOrder: 0,
 		sumTotal: 0,
-		activeProduct: 0
+		activeProduct: 0,
+		productList: {}
 	},
 	getters: {
 		getAmount: (state) => (id) => {
 			return state.newOrder[id]
+		},
+		getSumTotal (state) {
+			let totalSum = 0
+			Object.keys(this.basket).forEach((key) => {
+				const amount = this.basket[key]
+				const price = state.productList[key].price
+				totalSum += amount * price
+			})
+			return totalSum
 		}
 	},
 	mutations: {
@@ -23,6 +34,7 @@ export default new Vuex.Store({
 			if (productAmount > 0) {
 				state.sumTotal += payload[0].price
 			} else {
+				//! Prevent this from going negative
 				state.sumTotal -= payload[0].price
 			}
 			// console.log('UPDATE_BASKET -> productAmount: ', productAmount)
@@ -33,6 +45,10 @@ export default new Vuex.Store({
 		},
 		updateActiveProduct (state, id) {
 			state.activeProduct = id
+		},
+		updateCheckedOutOrder (state, id) {
+			state.activeOrder = id
+			console.log(`order with id: ${state.activeOrder} has been checked out`)
 		}
 	},
 	actions: {
@@ -61,6 +77,9 @@ export default new Vuex.Store({
 		},
 		updateActiveProduct (context, id) {
 			context.commit('updateActiveProduct', id)
+		},
+		updateCheckedOutOrder (context, id) {
+			context.commit('updateCheckedOutOrder', id)
 		}
 	},
 	modules: {}

@@ -71,12 +71,35 @@ export default {
 			console.log(orderArray)
 			console.log(paymentType)
 
-			// TODO Create a payload with the correct payment type
-
 			// TODO Do query and send
+			this.sendToBackend(orderArray, paymentType)
 
 			// TODO Route to details page for this order
+			delete this.$store.state.newOrder
+			this.$router.push({ name: 'OrderDetail' })
 			//! Profit
+		},
+		sendToBackend(orderArray, paymentType) {
+			this.$apollo
+				.mutate({
+					mutation: require('../graphql/createOrder.gql'), // replace
+					variables: {
+						productIds: orderArray,
+						paymentType: paymentType,
+						// variables for the mutation
+					},
+				})
+				.then(response => {
+					// console.log(response.data)
+					// console.log(response.data.createOrder.order.id)
+					this.$store.dispatch(
+						'updateCheckedOutOrder',
+						response.data.createOrder.order.id
+					)
+				})
+				.catch(error => {
+					console.log(error)
+				})
 		},
 	},
 }

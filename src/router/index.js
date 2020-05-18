@@ -4,6 +4,7 @@ import { IonicVueRouter } from '@ionic/vue'
 // Application Views
 import OrderHistory from '../views/OrderHistory.vue'
 import OrderCheckout from '../views/OrderCheckout.vue'
+import OrderDetail from '../views/OrderDetail.vue'
 import ProductCatalogue from '../views/ProductCatalogue.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import SignIn from '../views/SignIn.vue'
@@ -28,12 +29,17 @@ const routes = [
 		}
 	},
 	{
+		path: '/order',
+		name: 'OrderDetail',
+		component: OrderDetail
+	},
+	{
 		path: '/products',
 		name: 'ProductCatalogue',
 		component: ProductCatalogue
 	},
 	{
-		path: '/product-detail',
+		path: '/product',
 		name: 'ProductDetail',
 		component: ProductDetail
 	},
