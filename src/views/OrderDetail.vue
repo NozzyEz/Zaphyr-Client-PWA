@@ -8,7 +8,7 @@
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
 			</ion-toolbar>
 		</ion-header>
-		<ion-content>
+		<ion-content v-if="orderId">
 			<ApolloQuery
 				:query="require('../graphql/order.gql')"
 				:variables="{ id: orderId }"
@@ -31,7 +31,12 @@ export default {
 	name: 'OrderDetail',
 	data() {
 		return {
-			orderId: this.$store.state.activeOrder,
+			// orderId: this.$store.state.activeOrder,
+		}
+	},
+	computed: {
+		orderId () {
+			return this.$store.state.activeOrder
 		}
 	},
 	methods: {},
