@@ -1,4 +1,4 @@
-mutation createOrder($productIds: [ID!]!, $paymentType: String!) {
+mutation createOrder($productIds: [Int!]!, $paymentType: String!) {
 	createOrder(productIds: $productIds, paymentType: $paymentType) {
 		order {
 			id

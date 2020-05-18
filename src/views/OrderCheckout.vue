@@ -94,7 +94,7 @@ export default {
 					// console.log(response.data.createOrder.order.id)
 					this.$store.dispatch(
 						'updateCheckedOutOrder',
-						response.data.createOrder.order.id
+						parseInt(response.data.createOrder.order.id)
 					)
 				})
 				.catch(error => {

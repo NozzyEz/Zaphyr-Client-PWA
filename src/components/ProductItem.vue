@@ -64,7 +64,7 @@ export default {
 			// console.log(this.$store.state.newOrder)
 		},
 		goToDetail(id) {
-			this.updateActiveProduct(id)
+			this.updateActiveProduct(parseInt(id))
 			// console.log(this.$store.state.activeProduct)
 			this.$router.push({ name: 'ProductDetail' })
 		},
