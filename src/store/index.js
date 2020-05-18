@@ -18,11 +18,17 @@ export default new Vuex.Store({
 		},
 		getSumTotal (state) {
 			let totalSum = 0
-			Object.keys(this.basket).forEach((key) => {
-				const amount = this.basket[key]
-				const price = state.productList[key].price
-				totalSum += amount * price
-			})
+			const newOrderHasValue = Object.entries(state.newOrder).length !== 0
+			const productListHasValue = Object.entries(state.productList).length !== 0
+			if (newOrderHasValue && productListHasValue) {
+				Object.keys(state.newOrder).forEach((key) => {
+					const amount = state.newOrder[key]
+					const price = state.productList[key].price
+					console.log('Amount', amount)
+					console.log('Price', state.productList[key])
+					totalSum += amount * price
+				})
+			}
 			return totalSum
 		}
 	},

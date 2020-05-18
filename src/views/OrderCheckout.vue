@@ -18,7 +18,7 @@
 		<ion-footer>
 			<ion-grid>
 				<ion-row>
-					<strong>Total: {{ total }} DKK</strong>
+					<strong>Total: {{ sumTotal }} DKK</strong>
 				</ion-row>
 				<ion-row>
 					<ion-col>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import CheckoutItem from '../components/CheckoutItem'
 export default {
 	name: 'OrderCheckout',
@@ -54,6 +54,9 @@ export default {
 		...mapState({
 			basket: 'newOrder',
 			total: 'sumTotal',
+		}),
+		...mapGetters({
+			sumTotal: 'getSumTotal',
 		}),
 	},
 	methods: {
