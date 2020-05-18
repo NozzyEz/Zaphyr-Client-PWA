@@ -1,0 +1,14 @@
+mutation createOrder($productIds: [Integer!], $paymentType: String!) {
+	createOrder(productIds: $productIds, paymentType: $paymentType) {
+		order {
+			id
+			userId
+			organizationId
+			products {
+				name
+				price
+			}
+		}
+		errors
+	}
+}

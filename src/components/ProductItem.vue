@@ -61,11 +61,11 @@ export default {
 			}
 			let payload = [product, amount, msg]
 			this.$store.dispatch('updateBasket', payload)
-			console.log(this.$store.state.newOrder)
+			// console.log(this.$store.state.newOrder)
 		},
 		goToDetail(id) {
 			this.updateActiveProduct(id)
-			console.log(this.$store.state.activeProduct)
+			// console.log(this.$store.state.activeProduct)
 			this.$router.push({ name: 'ProductDetail' })
 		},
 	},

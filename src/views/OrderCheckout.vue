@@ -22,10 +22,17 @@
 				</ion-row>
 				<ion-row>
 					<ion-col>
-						<ion-button expand="block" color="primary"
+						<ion-button
+							@click="finalizeOrder((paymentType = 'MobilePay'))"
+							expand="block"
+							color="primary"
 							>Betal med MobilePay</ion-button
 						>
-						<ion-button expand="block" color="primary" fill="outline"
+						<ion-button
+							@click="finalizeOrder((paymentType = 'Cash'))"
+							expand="block"
+							color="primary"
+							fill="outline"
 							>Betal med kontanter</ion-button
 						>
 					</ion-col>
@@ -48,6 +55,29 @@ export default {
 			basket: 'newOrder',
 			total: 'sumTotal',
 		}),
+	},
+	methods: {
+		finalizeOrder(paymentType) {
+			// Convert basket to array
+			let orderArray = []
+			Object.keys(this.basket).forEach(key => {
+				let value = this.basket[key]
+				for (let i = 0; i < value; i++) {
+					orderArray.push(parseInt(key))
+				}
+			})
+
+			// print final basket and payment type to confirm
+			console.log(orderArray)
+			console.log(paymentType)
+
+			// TODO Create a payload with the correct payment type
+
+			// TODO Do query and send
+
+			// TODO Route to details page for this order
+			//! Profit
+		},
 	},
 }
 </script>

@@ -25,7 +25,7 @@ export default new Vuex.Store({
 			} else {
 				state.sumTotal -= payload[0].price
 			}
-			console.log('UPDATE_BASKET -> productAmount: ', productAmount)
+			// console.log('UPDATE_BASKET -> productAmount: ', productAmount)
 
 			state.newOrder[productId] = productAmount
 			// Trigger reactivity on getter, used in CheckoutItem

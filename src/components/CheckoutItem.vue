@@ -87,13 +87,13 @@ export default {
 	},
 	watch: {
 		amount() {
-			console.log('Watcher amount fired')
+			// console.log('Watcher amount fired')
 		},
 	},
 	computed: {
 		amount: {
 			get() {
-				console.log('Getter Fired', this.$store.state.newOrder[this.id])
+				// console.log('Getter Fired', this.$store.state.newOrder[this.id])
 				return this.$store.state.newOrder[this.id]
 			},
 			set(val) {
