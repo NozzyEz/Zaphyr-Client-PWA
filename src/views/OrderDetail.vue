@@ -17,7 +17,7 @@
 					<div v-if="loading">Loading in data</div>
 					<div v-if="error">{{ error }}</div>
 					<div v-if="data">
-						{{ data }}
+						{{ data.order }}
 					</div>
 				</template>
 			</ApolloQuery>
@@ -29,7 +29,6 @@
 <script>
 export default {
 	name: 'OrderDetail',
-	props: ['product'],
 	data() {
 		return {
 			orderId: this.$store.state.activeOrder,
