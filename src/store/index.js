@@ -8,9 +8,8 @@ export default new Vuex.Store({
 	state: {
 		newOrder: {},
 		activeOrder: 0,
-		sumTotal: 0,
 		activeProduct: 0,
-		productList: {}
+		priceList: {}
 	},
 	getters: {
 		getAmount: (state) => (id) => {
@@ -19,13 +18,11 @@ export default new Vuex.Store({
 		getSumTotal (state) {
 			let totalSum = 0
 			const newOrderHasValue = Object.entries(state.newOrder).length !== 0
-			const productListHasValue = Object.entries(state.productList).length !== 0
-			if (newOrderHasValue && productListHasValue) {
+			const priceListHasValue = Object.entries(state.priceList).length !== 0
+			if (newOrderHasValue && priceListHasValue) {
 				Object.keys(state.newOrder).forEach((key) => {
 					const amount = state.newOrder[key]
-					const price = state.productList[key].price
-					console.log('Amount', amount)
-					console.log('Price', state.productList[key])
+					const price = state.priceList[key]
 					totalSum += amount * price
 				})
 			}
@@ -34,16 +31,8 @@ export default new Vuex.Store({
 	},
 	mutations: {
 		UPDATE_BASKET (state, payload) {
-			const productId = payload[0].id.toString()
-			// console.log(productId)
+			const productId = payload[0].id
 			const productAmount = payload[1]
-			if (productAmount > 0) {
-				state.sumTotal += payload[0].price
-			} else {
-				//! Prevent this from going negative
-				state.sumTotal -= payload[0].price
-			}
-			// console.log('UPDATE_BASKET -> productAmount: ', productAmount)
 
 			state.newOrder[productId] = productAmount
 			// Trigger reactivity on getter, used in CheckoutItem
@@ -55,6 +44,9 @@ export default new Vuex.Store({
 		updateCheckedOutOrder (state, id) {
 			state.activeOrder = id
 			console.log(`order with id: ${state.activeOrder} has been checked out`)
+		},
+		SET_PRICE_LIST(state, products) {
+			state.priceList = products
 		}
 	},
 	actions: {
@@ -86,6 +78,13 @@ export default new Vuex.Store({
 		},
 		updateCheckedOutOrder (context, id) {
 			context.commit('updateCheckedOutOrder', id)
+		},
+		setPriceList(context, products) {
+			let composedPriceList = {}
+			products.forEach(product => {
+				composedPriceList[product.id] = product.price
+			})
+			context.commit('SET_PRICE_LIST', composedPriceList)
 		}
 	},
 	modules: {}

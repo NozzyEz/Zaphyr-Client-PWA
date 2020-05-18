@@ -52,8 +52,7 @@ export default {
 	},
 	computed: {
 		...mapState({
-			basket: 'newOrder',
-			total: 'sumTotal',
+			basket: 'newOrder'
 		}),
 		...mapGetters({
 			sumTotal: 'getSumTotal',

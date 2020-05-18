@@ -27,7 +27,7 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						<strong>Total : {{ total }} DKK</strong>
+						<strong>Total : {{ sumTotal }} DKK</strong>
 					</ion-col>
 					<ion-col>
 						<ion-button expand="block" @click="toCheckout">
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import ProductItem from '../components/ProductItem'
 
 export default {
@@ -51,16 +51,31 @@ export default {
 	},
 	computed: {
 		...mapState({
-			basket: 'newOrder',
-			total: 'sumTotal',
+			basket: 'newOrder'
+		}),
+		...mapGetters({
+			sumTotal: 'getSumTotal',
 		}),
 	},
 	methods: {
 		...mapActions({
 			showToast: 'showToast',
 			toCheckout: 'toCheckout',
+			setPriceList: 'setPriceList'
 		}),
+		priceListToStore() {
+			this.$apollo
+				.query({
+					query: require('../graphql/products.gql')
+				})
+				.then(response => {
+					this.setPriceList(response.data.products)
+				})
+		},
 	},
+	mounted() {
+		this.priceListToStore()
+	}
 }
 </script>
 
