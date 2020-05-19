@@ -63,7 +63,7 @@
 									<ion-row>
 										<ion-col
 											><div class="ion-text-end">
-												{{ data.product.price * amount }} DKK
+												{{ data.product.price }} DKK
 											</div></ion-col
 										>
 									</ion-row>
@@ -107,9 +107,9 @@ addIcons({
 
 export default {
 	name: 'ProductDetail',
-	props: ['product'],
 	data() {
 		return {
+			product: {},
 			pid: parseInt(this.$store.state.activeProduct),
 			total: this.$store.state.sumTotal,
 		}
@@ -126,16 +126,15 @@ export default {
 		...mapGetters({
 			sumTotal: 'getSumTotal',
 		}),
-		computed: {
-			amount: {
-				get() {
-					// console.log('Getter Fired', this.$store.state.newOrder[this.id])
-					return this.basket[this.pid.toString()]
-				},
-				set(val) {
-					val = parseInt(val) || 0
-					this.$store.commit('UPDATE_BASKET', [this.product, val])
-				},
+
+		amount: {
+			get() {
+				// console.log('Getter Fired', this.$store.state.newOrder[this.id])
+				return this.basket[this.pid.toString()]
+			},
+			set(val) {
+				val = parseInt(val) || 0
+				this.$store.commit('UPDATE_BASKET', [this.product, val])
 			},
 		},
 	},
@@ -144,6 +143,22 @@ export default {
 			toCheckout: 'toCheckout',
 			updateBasket: 'updateBasket',
 		}),
+		getProduct() {
+			this.$apollo
+				.query({
+					query: require('../graphql/product.gql'),
+					variables: {
+						id: this.pid,
+					},
+				})
+				.then(data => {
+					this.product = data.data.product
+				})
+		},
+	},
+	mounted() {
+		// console.log(this.product)
+		this.product = this.getProduct()
 	},
 }
 </script>
