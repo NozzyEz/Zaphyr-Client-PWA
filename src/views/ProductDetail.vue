@@ -30,7 +30,6 @@
 								{{ data.product.description }}
 								<ion-grid>
 									<ion-row>
-										<ion-col>{{ data.product.price * amount }} DKK</ion-col>
 										<ion-col>
 											<ion-input
 												:value="amount"
@@ -39,7 +38,7 @@
 												type="number"
 											/>
 										</ion-col>
-										<ion-col>
+										<ion-col size="6">
 											<div class="ion-text-end">
 												<ion-button @click="amount++" fill="clear">
 													<ion-icon
@@ -60,6 +59,13 @@
 												</ion-button>
 											</div>
 										</ion-col>
+									</ion-row>
+									<ion-row>
+										<ion-col
+											><div class="ion-text-end">
+												{{ data.product.price * amount }} DKK
+											</div></ion-col
+										>
 									</ion-row>
 								</ion-grid>
 							</ion-card-content>
