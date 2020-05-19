@@ -45,8 +45,13 @@ export default new Vuex.Store({
 			state.activeOrder = id
 			console.log(`order with id: ${state.activeOrder} has been checked out`)
 		},
-		SET_PRICE_LIST(state, products) {
+		SET_PRICE_LIST (state, products) {
 			state.priceList = products
+		},
+		removeFromBasket (state, id) {
+			console.log(state.newOrder[id])
+			delete state.newOrder[id]
+			console.log(state.newOrder[id])
 		}
 	},
 	actions: {
@@ -79,12 +84,15 @@ export default new Vuex.Store({
 		updateCheckedOutOrder (context, id) {
 			context.commit('updateCheckedOutOrder', id)
 		},
-		setPriceList(context, products) {
+		setPriceList (context, products) {
 			let composedPriceList = {}
-			products.forEach(product => {
+			products.forEach((product) => {
 				composedPriceList[product.id] = product.price
 			})
 			context.commit('SET_PRICE_LIST', composedPriceList)
+		},
+		removeFromBasket (context, id) {
+			context.commit('removeFromBasket', id)
 		}
 	},
 	modules: {}

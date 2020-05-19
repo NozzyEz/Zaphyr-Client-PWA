@@ -9,7 +9,10 @@
 			<div v-if="data">
 				<ion-item-sliding>
 					<ion-item-options side="end">
-						<ion-item-option color="danger" @click="removeFromBasket">
+						<ion-item-option
+							color="danger"
+							@click="removeFromBasket(data.product.id)"
+						>
 							<ion-icon slot="icon-only" name="trash" size="large" />
 						</ion-item-option>
 					</ion-item-options>
@@ -113,6 +116,7 @@ export default {
 		...mapActions({
 			showToast: 'showToast',
 			updateBasket: 'updateBasket',
+			removeFromBasket: 'removeFromBasket',
 		}),
 		// deleteFromOrder(id) {},
 		getProduct() {
@@ -134,11 +138,6 @@ export default {
 					: `${product.name} er blevet tilføjet til kurven`
 			const payload = [product, newValue, msg]
 			this.updateBasket(payload)
-		},
-		removeFromBasket() {
-			console.log(this.$store.state.newOrder[this.id])
-			delete this.$store.state.newOrder[this.id]
-			console.log(this.$store.state.newOrder[this.id])
 		},
 	},
 	mounted() {

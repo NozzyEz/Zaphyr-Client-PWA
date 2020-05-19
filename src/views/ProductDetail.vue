@@ -3,7 +3,7 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-buttons slot="start">
-					<ion-back-button />
+					<ion-back-button @click="isAdded" />
 				</ion-buttons>
 				<ion-title>
 					Produkt Detaljer
@@ -81,7 +81,7 @@
 						<strong>Total : {{ sumTotal }} DKK</strong>
 					</ion-col>
 					<ion-col>
-						<ion-button expand="block" @click="toCheckout">
+						<ion-button expand="block" @click="finalize">
 							Bestil og Betal
 						</ion-button>
 					</ion-col>
@@ -142,6 +142,7 @@ export default {
 		...mapActions({
 			toCheckout: 'toCheckout',
 			updateBasket: 'updateBasket',
+			removeFromBasket: 'removeFromBasket',
 		}),
 		getProduct() {
 			this.$apollo
@@ -154,6 +155,14 @@ export default {
 				.then(data => {
 					this.product = data.data.product
 				})
+		},
+		isAdded(pid) {
+			const id = pid.toString()
+			if (this.basket[id] == 0) this.removeFromBasket(id)
+		},
+		finalize() {
+			this.isAdded(this.pid)
+			this.toCheckout()
 		},
 	},
 	mounted() {
