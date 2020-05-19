@@ -4,5 +4,9 @@ query product($id: Int!) {
 		name
 		price
 		description
+		images {
+			id
+			url
+		}
 	}
 }

@@ -19,10 +19,51 @@
 					<div v-if="loading">Loading in data</div>
 					<div v-if="error">{{ error }}</div>
 					<div v-if="data">
-						{{ data.product.id }}
-						{{ data.product.name }}
-						{{ data.product.description }}
-						{{ data.product.price }}
+						<ion-card>
+							<img src="../assets/coq-au-vin-1.jpg" />
+							<ion-card-header>
+								<ion-card-subtitle>Restauranten tilbyder:</ion-card-subtitle>
+								<ion-card-title>{{ data.product.name }}</ion-card-title>
+							</ion-card-header>
+
+							<ion-card-content>
+								{{ data.product.description }}
+								<ion-grid>
+									<ion-row>
+										<ion-col>{{ data.product.price * amount }} DKK</ion-col>
+										<ion-col>
+											<ion-input
+												:value="amount"
+												@input="amount = $event.target.value"
+												min="0"
+												type="number"
+											/>
+										</ion-col>
+										<ion-col>
+											<div class="ion-text-end">
+												<ion-button @click="amount++" fill="clear">
+													<ion-icon
+														slot="icon-only"
+														name="add-outline"
+														size="large"
+													/>
+												</ion-button>
+												<ion-button
+													@click="amount > 0 ? amount-- : amount"
+													fill="clear"
+												>
+													<ion-icon
+														slot="icon-only"
+														name="remove-circle"
+														size="large"
+													/>
+												</ion-button>
+											</div>
+										</ion-col>
+									</ion-row>
+								</ion-grid>
+							</ion-card-content>
+						</ion-card>
 					</div>
 				</template>
 			</ApolloQuery>
@@ -31,7 +72,7 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						<strong>Total : {{ total }} DKK</strong>
+						<strong>Total : {{ sumTotal }} DKK</strong>
 					</ion-col>
 					<ion-col>
 						<ion-button expand="block" @click="toCheckout">
@@ -45,7 +86,18 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
+import { addIcons } from 'ionicons'
+import { addCircle, removeCircle, trash } from 'ionicons/icons'
+
+addIcons({
+	'ios-add-outline': addCircle,
+	'md-add-outline': addCircle,
+	'ios-remove-circle': removeCircle,
+	'md-remove-circle': removeCircle,
+	'ios-trash': trash,
+	'md-trash': trash,
+})
 
 export default {
 	name: 'ProductDetail',
@@ -56,9 +108,35 @@ export default {
 			total: this.$store.state.sumTotal,
 		}
 	},
+	watch: {
+		amount() {
+			// console.log('Watcher amount fired')
+		},
+	},
+	computed: {
+		...mapState({
+			basket: 'newOrder',
+		}),
+		...mapGetters({
+			sumTotal: 'getSumTotal',
+		}),
+		computed: {
+			amount: {
+				get() {
+					// console.log('Getter Fired', this.$store.state.newOrder[this.id])
+					return this.basket[this.pid.toString()]
+				},
+				set(val) {
+					val = parseInt(val) || 0
+					this.$store.commit('UPDATE_BASKET', [this.product, val])
+				},
+			},
+		},
+	},
 	methods: {
 		...mapActions({
 			toCheckout: 'toCheckout',
+			updateBasket: 'updateBasket',
 		}),
 	},
 }

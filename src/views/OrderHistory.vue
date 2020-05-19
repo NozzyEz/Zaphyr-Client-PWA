@@ -36,7 +36,7 @@
 		</ion-content>
 		<ion-footer>
 			<div class="ion-padding">
-				<ion-button @click="newOrder" expand="block" color="success"
+				<ion-button @click="newOrder" expand="block" color="primary"
 					>Ny Bestilling</ion-button
 				>
 				<ion-button
