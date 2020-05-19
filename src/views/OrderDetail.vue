@@ -3,7 +3,7 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-buttons slot="start">
-					<ion-back-button />
+					<ion-back-button default-href="/" />
 				</ion-buttons>
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
 			</ion-toolbar>
@@ -35,9 +35,9 @@ export default {
 		}
 	},
 	computed: {
-		orderId () {
+		orderId() {
 			return this.$store.state.activeOrder
-		}
+		},
 	},
 	methods: {},
 }

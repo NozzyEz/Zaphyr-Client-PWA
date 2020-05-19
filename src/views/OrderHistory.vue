@@ -7,17 +7,19 @@
 		</ion-header>
 		<ion-content class="ion-padding ion-text-center">
 			<ion-grid>
-				<ion-row>
-					<ion-item>
-						<ion-col></ion-col>
-						<ion-col size="8">
-							<div class="ion-text-end">
+				<ion-item>
+					<ion-col></ion-col>
+					<ion-col size="8">
+						<div>
+							<ion-row>
 								{{ `Focus nummer: ${user.username}` }}
+							</ion-row>
+							<ion-row>
 								{{ `Navn: ${user.name}` }}
-							</div>
-						</ion-col>
-					</ion-item>
-				</ion-row>
+							</ion-row>
+						</div>
+					</ion-col>
+				</ion-item>
 			</ion-grid>
 			<img alt="Vue logo" src="../assets/logo.png" />
 			<ApolloQuery :query="require('../graphql/users.gql')">
