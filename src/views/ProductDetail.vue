@@ -38,7 +38,7 @@
 												type="number"
 											/>
 										</ion-col>
-										<ion-col size="6">
+										<ion-col size="8">
 											<div class="ion-text-end">
 												<ion-button @click="amount++" fill="clear">
 													<ion-icon
@@ -61,11 +61,16 @@
 										</ion-col>
 									</ion-row>
 									<ion-row>
-										<ion-col
-											><div class="ion-text-end">
+										<ion-col>
+											<ion-button @click="amount = 0" color="danger">
+												<ion-icon slot="icon-only" name="trash" size="large" />
+											</ion-button>
+										</ion-col>
+										<ion-col>
+											<div class="ion-text-end">
 												{{ data.product.price }} DKK
-											</div></ion-col
-										>
+											</div>
+										</ion-col>
 									</ion-row>
 								</ion-grid>
 							</ion-card-content>
