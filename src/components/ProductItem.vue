@@ -65,6 +65,7 @@ export default {
 		},
 		goToDetail(id) {
 			this.updateActiveProduct(parseInt(id))
+			if (!this.$store.state.newOrder[id]) this.$store.state.newOrder[id] = 0
 			// console.log(this.$store.state.activeProduct)
 			this.$router.push({ name: 'ProductDetail' })
 		},
