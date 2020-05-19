@@ -49,9 +49,8 @@ export default new Vuex.Store({
 			state.priceList = products
 		},
 		removeFromBasket (state, id) {
-			console.log(state.newOrder[id])
 			delete state.newOrder[id]
-			console.log(state.newOrder[id])
+			state.newOrder = { ...state.newOrder }
 		}
 	},
 	actions: {
