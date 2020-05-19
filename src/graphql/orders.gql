@@ -1,0 +1,12 @@
+query orders {
+	orders {
+		id
+		createdAt
+		products {
+			name
+			price
+		}
+		paymentType
+		paid
+	}
+}

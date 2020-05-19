@@ -21,14 +21,14 @@
 					</ion-col>
 				</ion-item>
 			</ion-grid>
-			<img alt="Vue logo" src="../assets/logo.png" />
-			<ApolloQuery :query="require('../graphql/users.gql')">
+
+			<ApolloQuery :query="require('../graphql/orders.gql')">
 				<template v-slot="{ result: { loading, error, data } }">
 					<div v-if="loading">Loading in data</div>
 					<div v-if="error">{{ error }}</div>
 					<div v-if="data">
-						<div v-for="user in data.users" :key="user.id">
-							{{ user.firstName }} {{ user.lastName }} - {{ user.email }}
+						<div v-for="order in data.orders" :key="order.id">
+							<OrderItem v-bind:order="order" />
 						</div>
 					</div>
 				</template>
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import OrderItem from '../components/OrderItem'
 import { mapActions } from 'vuex'
 export default {
 	name: 'OrderHistory',
@@ -68,7 +69,9 @@ export default {
 			},
 		}
 	},
-	components: {},
+	components: {
+		OrderItem,
+	},
 	methods: {
 		...mapActions({
 			showToast: 'showToast',
