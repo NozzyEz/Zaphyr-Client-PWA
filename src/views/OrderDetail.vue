@@ -47,11 +47,16 @@
 											</ion-col>
 										</ion-row>
 									</div>
-									<div class="ion-text-end">
-										<strong>
-											total: {{ calculateCost(data.order.products) }}
-										</strong>
-									</div>
+									<ion-row>
+										<ion-col>Betalt med: {{ data.order.paymentType }}</ion-col>
+										<ion-col
+											><div class="ion-text-end">
+												<strong>
+													total: {{ calculateCost(data.order.products) }}
+												</strong>
+											</div></ion-col
+										>
+									</ion-row>
 								</ion-grid>
 							</ion-card-content>
 						</ion-card>
