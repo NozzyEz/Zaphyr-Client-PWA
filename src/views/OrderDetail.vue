@@ -3,7 +3,7 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-buttons slot="start">
-					<ion-back-button default-href="/" />
+					<ion-back-button default-href="/"></ion-back-button>
 				</ion-buttons>
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
 			</ion-toolbar>
@@ -87,7 +87,7 @@ export default {
 			return computedDate
 		},
 		calculateCost(products) {
-			console.log(products)
+			// console.log(products)
 			let cost = 0
 			// console.log(this.order.products)
 			products.forEach(product => (cost += product.price))

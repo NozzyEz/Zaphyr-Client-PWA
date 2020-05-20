@@ -39,9 +39,9 @@ export default {
 		}
 	},
 	computed: {
-		funct() {
-			return console.log(this.order)
-		},
+		// funct() {
+		// 	return console.log(this.order)
+		// },
 	},
 	methods: {
 		goToDetail() {
