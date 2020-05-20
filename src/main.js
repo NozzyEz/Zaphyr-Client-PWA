@@ -9,6 +9,7 @@ import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloLink } from 'apollo-link'
 import { createProvider } from './vue-apollo'
+import VueQriously from 'vue-qriously'
 
 // Ionic Imports for UI
 import Ionic from '@ionic/vue'
@@ -38,6 +39,7 @@ const authMiddelware = new ApolloLink((operation, forward) => {
 
 Vue.use(VueApollo)
 Vue.use(Ionic)
+Vue.use(VueQriously)
 const apolloClient = new ApolloClient({
 	link: authMiddelware.concat(httpLink),
 	cache: new InMemoryCache(),
@@ -50,8 +52,8 @@ const apolloProvider = new createProvider({
 })
 
 new Vue({
-    router,
-    apolloProvider: apolloProvider,
-    store,
-    render: (h) => h(App)
+	router,
+	apolloProvider: apolloProvider,
+	store,
+	render: (h) => h(App)
 }).$mount('#app')
