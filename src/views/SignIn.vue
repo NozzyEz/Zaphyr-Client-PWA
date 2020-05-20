@@ -46,6 +46,27 @@
 						</ApolloMutation>
 					</ion-col>
 				</ion-row>
+				<ion-row>
+					<ion-col>
+						<ion-card>
+							<ion-card-header>
+								<ion-card-title> Obs:</ion-card-title>
+							</ion-card-header>
+							<ion-card-content class="ion-text-justify">
+								<p>
+									Denne app virker bedst hvis den bliver downloadet til din
+									hjemmeskærm, benyt derfor gerne denne funktion for den bedst
+									mulige oplevelse.
+								</p>
+								<br />
+								<p>
+									Appen er stadig i testfasen, og derfor vil der være fejl og
+									mangler, rapportér venligst disse hvis du skulle opleve dem.
+								</p>
+							</ion-card-content>
+						</ion-card>
+					</ion-col>
+				</ion-row>
 			</ion-grid>
 		</ion-content>
 	</div>
