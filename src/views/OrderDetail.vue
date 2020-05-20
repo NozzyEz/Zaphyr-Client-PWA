@@ -17,7 +17,44 @@
 					<div v-if="loading">Loading in data</div>
 					<div v-if="error">{{ error }}</div>
 					<div v-if="data">
-						{{ data.order }}
+						<ion-card>
+							<ion-card-header>
+								<ion-card-subtitle>
+									<ion-chip v-if="data.order.paid == true" color="success">
+										<ion-label>Betalt</ion-label>
+									</ion-chip>
+									<ion-chip v-if="data.order.paid == false" color="danger">
+										<ion-label>Ikke betalt</ion-label>
+									</ion-chip>
+									<ion-chip v-if="data.order.paid == null" color="warning">
+										<ion-label>Afventer</ion-label>
+									</ion-chip>
+								</ion-card-subtitle>
+								<ion-card-title>
+									{{ findDate(data.order.createdAt) }}
+								</ion-card-title>
+							</ion-card-header>
+							<ion-card-content>
+								<ion-grid>
+									<div v-for="product in data.order.products" :key="product.id">
+										<ion-row>
+											<ion-col>1x</ion-col>
+											<ion-col size="8">
+												{{ product.name }}
+											</ion-col>
+											<ion-col>
+												{{ product.price }}
+											</ion-col>
+										</ion-row>
+									</div>
+									<div class="ion-text-end">
+										<strong>
+											total: {{ calculateCost(data.order.products) }}
+										</strong>
+									</div>
+								</ion-grid>
+							</ion-card-content>
+						</ion-card>
 					</div>
 				</template>
 			</ApolloQuery>
@@ -30,16 +67,33 @@
 export default {
 	name: 'OrderDetail',
 	data() {
-		return {
-			// orderId: this.$store.state.activeOrder,
-		}
+		return {}
 	},
 	computed: {
 		orderId() {
 			return this.$store.state.activeOrder
 		},
 	},
-	methods: {},
+	methods: {
+		findDate(datetime) {
+			// console.log(this.order.createdAt)
+			const computedDate = new Date(datetime).toDateString()
+			// console.log(date)
+			return computedDate
+		},
+		calculateCost(products) {
+			console.log(products)
+			let cost = 0
+			// console.log(this.order.products)
+			products.forEach(product => (cost += product.price))
+			return cost
+		},
+		status() {
+			if (this.order.paid) {
+				return 'paid'
+			}
+		},
+	},
 }
 </script>
 
