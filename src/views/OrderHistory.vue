@@ -3,6 +3,11 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-title>Order History</ion-title>
+				<ion-buttons slot="end">
+					<ion-button @click="$router.push({ name: 'About' })">
+						<ion-icon slot="icon-only" name="info" size="large" />
+					</ion-button>
+				</ion-buttons>
 			</ion-toolbar>
 		</ion-header>
 		<ion-content class="ion-padding ion-text-center">
@@ -57,6 +62,13 @@
 <script>
 import OrderItem from '../components/OrderItem'
 import { mapActions } from 'vuex'
+import { addIcons } from 'ionicons'
+import { informationCircle } from 'ionicons/icons'
+
+addIcons({
+	'ios-info': informationCircle,
+	'md-info': informationCircle,
+})
 export default {
 	name: 'OrderHistory',
 	data() {

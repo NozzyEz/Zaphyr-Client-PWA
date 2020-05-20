@@ -10,6 +10,7 @@ import ProductDetail from '../views/ProductDetail.vue'
 import SignIn from '../views/SignIn.vue'
 import RegisterUser from '../views/RegisterUser.vue'
 import UpdateProfile from '../views/UpdateProfile.vue'
+import About from '../views/About.vue'
 
 Vue.use(IonicVueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
 				next({ name: 'SignIn' })
 			}
 		}
+	},
+	{
+		path: '/about',
+		name: 'About',
+		component: About
 	},
 	{
 		path: '/order',
