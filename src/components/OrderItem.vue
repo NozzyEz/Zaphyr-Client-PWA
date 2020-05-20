@@ -2,7 +2,7 @@
 	<ion-card @click="goToDetail">
 		<ion-card-header>
 			<ion-subtitle>
-				{{ order.createdAt }}
+				{{ date }}
 			</ion-subtitle>
 		</ion-card-header>
 		<ion-card-content>
@@ -35,7 +35,7 @@ export default {
 	data() {
 		return {
 			cost: this.calculateCost(),
-			// status: 'pending',
+			date: this.findDate(),
 		}
 	},
 	computed: {
@@ -48,13 +48,17 @@ export default {
 			this.$store.dispatch('updateActiveOrder', parseInt(this.order.id))
 			this.$router.push({ name: 'OrderDetail' })
 		},
+		findDate() {
+			// console.log(this.order.createdAt)
+
+			const date = new Date(this.order.createdAt).toDateString()
+			// console.log(date)
+			return date
+		},
 		calculateCost() {
 			let cost = 0
-			console.log(this.order.products)
-			for (const product in this.order.products) {
-				console.log(product)
-				cost += this.$store.state.priceList[product.toString()]
-			}
+			// console.log(this.order.products)
+			this.order.products.forEach(product => (cost += product.price))
 			return cost
 		},
 		status() {
