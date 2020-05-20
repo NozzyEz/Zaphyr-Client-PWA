@@ -60,6 +60,8 @@ export default {
 	},
 	methods: {
 		finalizeOrder(paymentType) {
+			// TODO Check if basket has content
+
 			// Convert basket to array
 			let orderArray = []
 			Object.keys(this.basket).forEach(key => {
