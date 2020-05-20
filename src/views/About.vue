@@ -3,7 +3,7 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-buttons>
-					<ion-back-button />
+					<ion-back-button default-href="/"></ion-back-button>
 				</ion-buttons>
 				<ion-title>Om Zaphyr Appen</ion-title>
 			</ion-toolbar>
