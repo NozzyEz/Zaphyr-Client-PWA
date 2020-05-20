@@ -43,7 +43,6 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import ProductItem from '../components/ProductItem'
-
 export default {
 	name: 'ProductCatalogue',
 	components: {
@@ -51,7 +50,7 @@ export default {
 	},
 	computed: {
 		...mapState({
-			basket: 'newOrder'
+			basket: 'newOrder',
 		}),
 		...mapGetters({
 			sumTotal: 'getSumTotal',
@@ -61,21 +60,8 @@ export default {
 		...mapActions({
 			showToast: 'showToast',
 			toCheckout: 'toCheckout',
-			setPriceList: 'setPriceList'
 		}),
-		priceListToStore() {
-			this.$apollo
-				.query({
-					query: require('../graphql/products.gql')
-				})
-				.then(response => {
-					this.setPriceList(response.data.products)
-				})
-		},
 	},
-	mounted() {
-		this.priceListToStore()
-	}
 }
 </script>
 

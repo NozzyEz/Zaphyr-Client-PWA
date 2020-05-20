@@ -52,7 +52,7 @@ export default {
 	},
 	computed: {
 		...mapState({
-			basket: 'newOrder'
+			basket: 'newOrder',
 		}),
 		...mapGetters({
 			sumTotal: 'getSumTotal',
@@ -95,7 +95,7 @@ export default {
 					// console.log(response.data)
 					// console.log(response.data.createOrder.order.id)
 					this.$store.dispatch(
-						'updateCheckedOutOrder',
+						'updateActiveOrder',
 						parseInt(response.data.createOrder.order.id)
 					)
 				})

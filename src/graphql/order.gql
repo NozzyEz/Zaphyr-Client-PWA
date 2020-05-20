@@ -11,6 +11,7 @@ query product($id: Int!) {
 			email
 		}
 		products {
+			id
 			name
 			price
 		}

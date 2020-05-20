@@ -75,6 +75,7 @@ export default {
 	methods: {
 		...mapActions({
 			showToast: 'showToast',
+			setPriceList: 'setPriceList',
 		}),
 		newOrder() {
 			this.$router.push({ name: 'ProductCatalogue' })
@@ -102,6 +103,18 @@ export default {
 			}
 			return error
 		},
+		priceListToStore() {
+			this.$apollo
+				.query({
+					query: require('../graphql/products.gql'),
+				})
+				.then(response => {
+					this.setPriceList(response.data.products)
+				})
+		},
+	},
+	mounted() {
+		this.priceListToStore()
 	},
 }
 </script>
