@@ -2,7 +2,7 @@
 	<div class="ion-page">
 		<ion-header>
 			<ion-toolbar>
-				<ion-buttons>
+				<ion-buttons slot="start">
 					<ion-back-button default-href="/"></ion-back-button>
 				</ion-buttons>
 				<ion-title>Om Zaphyr Appen</ion-title>
