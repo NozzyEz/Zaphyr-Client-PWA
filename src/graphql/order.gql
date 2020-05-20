@@ -1,20 +1,13 @@
 query product($id: Int!) {
 	order(id: $id) {
 		id
-		organization {
-			id
-			name
-		}
-		user {
-			id
-			username
-			email
-		}
+		paid
 		products {
 			id
 			name
 			price
 		}
+		paymentType
 		createdAt
 		updatedAt
 	}

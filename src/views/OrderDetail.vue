@@ -52,7 +52,7 @@
 										<ion-col
 											><div class="ion-text-end">
 												<strong>
-													total: {{ calculateCost(data.order.products) }}
+													total: {{ calculateCost(data.order.products) }} DKK
 												</strong>
 											</div></ion-col
 										>
@@ -92,11 +92,6 @@ export default {
 			// console.log(this.order.products)
 			products.forEach(product => (cost += product.price))
 			return cost
-		},
-		status() {
-			if (this.order.paid) {
-				return 'paid'
-			}
 		},
 	},
 }
