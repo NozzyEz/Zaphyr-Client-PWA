@@ -80,7 +80,7 @@ export default {
 
 			// TODO Route to details page for this order
 			delete this.$store.state.newOrder
-			this.$router.push({ name: 'OrderDetail' })
+			this.$router.push({ name: 'Receipt' })
 			//! Profit
 		},
 		sendToBackend(orderArray, paymentType) {
@@ -108,6 +108,3 @@ export default {
 	},
 }
 </script>
-
-<style>
-</style>

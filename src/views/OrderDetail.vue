@@ -3,7 +3,7 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-buttons slot="start">
-					<ion-back-button default-href="/"></ion-back-button>
+					<ion-back-button @click="goBack()"></ion-back-button>
 				</ion-buttons>
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
 			</ion-toolbar>
@@ -36,17 +36,7 @@
 							</ion-card-header>
 							<ion-card-content>
 								<ion-grid>
-									<div v-for="product in data.order.products" :key="product.id">
-										<ion-row>
-											<ion-col>1x</ion-col>
-											<ion-col size="8">
-												{{ product.name }}
-											</ion-col>
-											<ion-col>
-												{{ product.price }}
-											</ion-col>
-										</ion-row>
-									</div>
+									<ReceiptItem v-bind:order="data.order" />
 									<ion-row>
 										<ion-col>Betalt med: {{ data.order.paymentType }}</ion-col>
 										<ion-col
@@ -69,8 +59,12 @@
 </template>
 
 <script>
+import ReceiptItem from '../components/ReceiptItem'
 export default {
 	name: 'OrderDetail',
+	components: {
+		ReceiptItem,
+	},
 	data() {
 		return {}
 	},
@@ -92,6 +86,9 @@ export default {
 			// console.log(this.order.products)
 			products.forEach(product => (cost += product.price))
 			return cost
+		},
+		goBack() {
+			this.$router.push({ name: 'OrderHistory' })
 		},
 	},
 }

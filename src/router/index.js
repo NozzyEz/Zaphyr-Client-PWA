@@ -37,6 +37,17 @@ const routes = [
 	{
 		path: '/order',
 		name: 'OrderDetail',
+		component: OrderDetail,
+		beforeEnter: (to, from, next) => {
+			if (localStorage.authenticationToken) {
+				console.log('you have an auth token')
+				next()
+			}
+		}
+	},
+	{
+		path: '/receipt',
+		name: 'Receipt',
 		component: OrderDetail
 	},
 	{
