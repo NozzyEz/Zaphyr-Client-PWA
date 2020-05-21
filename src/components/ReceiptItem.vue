@@ -1,17 +1,16 @@
 <template>
 	<div>
-		<div v-for="(product, index) in order.products" :key="index">
+		<div v-for="entry in receipt" :key="entry">
 			<ion-row>
-				<ion-col>1x</ion-col>
+				<ion-col>amount</ion-col>
 				<ion-col size="8">
-					{{ product.name }}
+					product name for key in receipt
 				</ion-col>
 				<ion-col>
-					{{ product.price }}
+					product price for key in receipt * amount
 				</ion-col>
 			</ion-row>
 		</div>
-		<!-- {{ order }} -->
 	</div>
 </template>
 
@@ -21,11 +20,18 @@ export default {
 	props: ['order'],
 	computed: {
 		receipt() {
-			return console.log('hello world')
+			let receipt = {}
+			// console.log(this.order.products)
+			this.order.products.forEach(product => {
+				if (receipt[product.id]) {
+					receipt[product.id] += 1
+				} else {
+					receipt[product.id] = 1
+				}
+			})
+			console.log(receipt)
+			return receipt
 		},
 	},
 }
 </script>
-
-<style>
-</style>
