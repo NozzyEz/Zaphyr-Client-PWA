@@ -63,7 +63,15 @@ export default new Vuex.Store({
 			})
 			await toast.present()
 		},
-
+		onError (state, err) {
+			return this._vm.$ionic.alertController
+				.create({
+					header: 'Fejl',
+					message: err,
+					buttons: [ 'OK' ]
+				})
+				.then((a) => a.present())
+		},
 		updateBasket (context, payload) {
 			context.commit('UPDATE_BASKET', payload)
 			context.dispatch('showToast', payload[2])
