@@ -1,13 +1,14 @@
 <template>
 	<div>
-		<div v-for="entry in receipt" :key="entry">
+		<div v-for="(amount, id) in receipt" :key="id">
 			<ion-row>
-				<ion-col>amount</ion-col>
-				<ion-col size="8">
-					product name for key in receipt
+				<ion-col size="2">{{ amount }}x</ion-col>
+				<ion-col size="6">
+					{{ order.products.find(p => p.id == id).name }}
 				</ion-col>
-				<ion-col>
-					product price for key in receipt * amount
+				<ion-col size="4" class="ion-text-end">
+					{{ order.products.find(p => p.id == id).price * amount }}
+					DKK
 				</ion-col>
 			</ion-row>
 		</div>
@@ -30,6 +31,7 @@ export default {
 				}
 			})
 			console.log(receipt)
+			console.log(this.order)
 			return receipt
 		},
 	},
