@@ -92,6 +92,23 @@ export default {
 						paymentType: paymentType,
 						// variables for the mutation
 					},
+					update: (cache, { data: { createOrder } }) => {
+						try {
+							const data = cache.readQuery({
+								query: require('../graphql/orders.gql'),
+							})
+							const insertedOrder = createOrder.order
+							data.orders.splice(0, 0, insertedOrder)
+							console.log(data.orders)
+
+							cache.writeQuery({
+								query: require('../graphql/orders.gql'),
+								data,
+							})
+						} catch (e) {
+							console.log(e)
+						}
+					},
 				})
 				.then(response => {
 					// console.log(response.data)

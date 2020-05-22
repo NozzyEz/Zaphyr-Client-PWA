@@ -2,12 +2,13 @@ mutation createOrder($productIds: [Int!]!, $paymentType: String!) {
 	createOrder(productIds: $productIds, paymentType: $paymentType) {
 		order {
 			id
-			userId
-			organizationId
+			createdAt
 			products {
 				name
 				price
 			}
+			paymentType
+			paid
 		}
 		errors
 	}
