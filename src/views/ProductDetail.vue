@@ -20,9 +20,19 @@
 					<div v-if="error">{{ error }}</div>
 					<div v-if="data">
 						<ion-card>
-							<img src="../assets/coq-au-vin-1.jpg" />
+							<img
+								v-if="
+									data.product.images.find(i => i.productId == data.product.id)
+								"
+								:src="
+									data.product.images.find(i => i.productId == data.product.id)
+										.url
+								"
+							/>
 							<ion-card-header>
-								<ion-card-subtitle>Restauranten tilbyder:</ion-card-subtitle>
+								<ion-card-subtitle>
+									Restauranten Tilbyder:
+								</ion-card-subtitle>
 								<ion-card-title>{{ data.product.name }}</ion-card-title>
 							</ion-card-header>
 
