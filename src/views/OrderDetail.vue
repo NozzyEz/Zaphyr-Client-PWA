@@ -4,6 +4,7 @@
 			<ion-toolbar>
 				<ion-buttons slot="start">
 					<ion-back-button @click="goBack()"></ion-back-button>
+					<!-- <ion-back-button defaultHref="OrderHistory"></ion-back-button> -->
 				</ion-buttons>
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
 			</ion-toolbar>
