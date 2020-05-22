@@ -3,7 +3,9 @@
 		<ion-header>
 			<ion-toolbar>
 				<ion-buttons slot="start">
-					<ion-back-button @click="goBack()"></ion-back-button>
+					<ion-button fill="clear" @click="goBack()" size="large">
+						<ion-icon name="arrow-back"></ion-icon>
+					</ion-button>
 					<!-- <ion-back-button defaultHref="OrderHistory"></ion-back-button> -->
 				</ion-buttons>
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
@@ -61,6 +63,13 @@
 
 <script>
 import ReceiptItem from '../components/ReceiptItem'
+import { addIcons } from 'ionicons'
+import { chevronDown } from 'ionicons/icons'
+
+addIcons({
+	'ios-arrow-back': chevronDown,
+	'md-arrow-back': chevronDown,
+})
 export default {
 	name: 'OrderDetail',
 	components: {
