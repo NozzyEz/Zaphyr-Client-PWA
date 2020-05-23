@@ -11,83 +11,67 @@
 			</ion-toolbar>
 		</ion-header>
 		<ion-content>
-			<ApolloQuery
-				:query="require('../graphql/product.gql')"
-				:variables="{ id: pid }"
-			>
-				<template v-slot="{ result: { loading, error, data } }">
-					<div v-if="loading">Loading in data</div>
-					<div v-if="error">{{ error }}</div>
-					<div v-if="data">
-						<ion-card>
-							<img
-								v-if="
-									data.product.images.find(i => i.productId == data.product.id)
-								"
-								:src="
-									data.product.images.find(i => i.productId == data.product.id)
-										.url
-								"
-							/>
-							<ion-card-header>
-								<ion-card-subtitle>
-									Restauranten Tilbyder:
-								</ion-card-subtitle>
-								<ion-card-title>{{ data.product.name }}</ion-card-title>
-							</ion-card-header>
+			<ion-card>
+				<img
+					v-if="this.product.images.find(i => i.productId == this.product.id)"
+					:src="
+						this.product.images.find(i => i.productId == this.product.id).url
+					"
+				/>
+				<ion-card-header>
+					<ion-card-subtitle>
+						Restauranten Tilbyder:
+					</ion-card-subtitle>
+					<ion-card-title>{{ product.name }}</ion-card-title>
+				</ion-card-header>
 
-							<ion-card-content>
-								{{ data.product.description }}
-								<ion-grid>
-									<ion-row>
-										<ion-col>
-											<ion-input
-												:value="amount"
-												@input="amount = $event.target.value"
-												min="0"
-												type="number"
-											/>
-										</ion-col>
-										<ion-col size="8">
-											<div class="ion-text-end">
-												<ion-button @click="amount++" fill="clear">
-													<ion-icon
-														slot="icon-only"
-														name="add-outline"
-														size="large"
-													/>
-												</ion-button>
-												<ion-button
-													@click="amount > 0 ? amount-- : amount"
-													fill="clear"
-												>
-													<ion-icon
-														slot="icon-only"
-														name="remove-circle"
-														size="large"
-													/>
-												</ion-button>
-											</div>
-										</ion-col>
-									</ion-row>
-									<ion-row>
-										<ion-col>
-											<ion-button @click="amount = 0" color="danger">
-												<ion-icon slot="icon-only" name="trash" size="large" />
-											</ion-button>
-										</ion-col>
-										<ion-col>
-											<div class="ion-text-end">
-												{{ data.product.price }} DKK
-											</div>
-										</ion-col>
-									</ion-row>
-								</ion-grid>
-							</ion-card-content>
-						</ion-card>
-					</div>
-				</template>
-			</ApolloQuery>
+				<ion-card-content>
+					{{ product.description }}
+					<ion-grid>
+						<ion-row>
+							<ion-col>
+								<ion-input
+									:value="amount"
+									@input="amount = $event.target.value"
+									min="0"
+									type="number"
+								/>
+							</ion-col>
+							<ion-col size="8">
+								<div class="ion-text-end">
+									<ion-button @click="amount++" fill="clear">
+										<ion-icon
+											slot="icon-only"
+											name="add-outline"
+											size="large"
+										/>
+									</ion-button>
+									<ion-button
+										@click="amount > 0 ? amount-- : amount"
+										fill="clear"
+									>
+										<ion-icon
+											slot="icon-only"
+											name="remove-circle"
+											size="large"
+										/>
+									</ion-button>
+								</div>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col>
+								<ion-button @click="amount = 0" color="danger">
+									<ion-icon slot="icon-only" name="trash" size="large" />
+								</ion-button>
+							</ion-col>
+							<ion-col>
+								<div class="ion-text-end">{{ product.price }} DKK</div>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</ion-card-content>
+			</ion-card>
 		</ion-content>
 		<ion-footer>
 			<ion-grid>
@@ -182,7 +166,7 @@ export default {
 	},
 	mounted() {
 		// console.log(this.product)
-		this.product = this.getProduct()
+		this.getProduct()
 	},
 }
 </script>
