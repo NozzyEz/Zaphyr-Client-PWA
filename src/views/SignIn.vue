@@ -112,7 +112,7 @@ export default {
 					this.$router.push({ name: 'OrderHistory' })
 				})
 				.catch(error => {
-					this.onError(error)
+					this.onError(error.message)
 				})
 		},
 		onLoad() {

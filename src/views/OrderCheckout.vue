@@ -114,7 +114,7 @@ export default {
 					},
 				})
 				.then(response => {
-					// console.log(response.data)
+					console.log(response.data)
 					// console.log(response.data.createOrder.order.id)
 					this.$store.dispatch(
 						'updateActiveOrder',
@@ -122,6 +122,7 @@ export default {
 					)
 				})
 				.catch(error => {
+					console.log(error)
 					this.onError(error)
 				})
 		},

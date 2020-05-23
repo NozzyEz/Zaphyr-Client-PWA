@@ -96,8 +96,8 @@ export default {
 		},
 		logOut() {
 			this.clearUser()
-			this.showToast('Du er nu logget ud')
 			this.$router.push({ name: 'SignIn' })
+			this.showToast('Du er nu logget ud')
 		},
 		priceListToStore() {
 			this.$apollo

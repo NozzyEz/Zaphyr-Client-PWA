@@ -89,6 +89,7 @@ export default {
 				})
 				.then(data => {
 					this.order = data.data.order
+					console.log(data)
 				})
 				.catch(error => {
 					this.onError(error)
@@ -102,9 +103,9 @@ export default {
 			return computedDate
 		},
 		calculateCost(products) {
-			// console.log(products)
+			console.log(products)
 			let cost = 0
-			// console.log(this.order.products)
+			console.log(this.order.products)
 			products.forEach(product => (cost += product.price))
 			return cost
 		},
@@ -114,7 +115,7 @@ export default {
 	},
 	mounted() {
 		// console.log(this.product)
-		this.getOrder()
+		this.order = this.getOrder()
 	},
 }
 </script>

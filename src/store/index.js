@@ -64,10 +64,11 @@ export default new Vuex.Store({
 			await toast.present()
 		},
 		onError (context, err) {
-			if (err.message.includes('GraphQL error: User not signed in')) {
-				router.push({ name: 'SignIn' })
-				context.dispatch('clearUser')
-			}
+			// if (err.includes('GraphQL error: User not signed in')) {
+			// 	router.push({ name: 'SignIn' })
+			// 	context.dispatch('clearUser')
+			// }
+			console.log(typeof err)
 			return this._vm.$ionic.alertController
 				.create({
 					header: 'Fejl',

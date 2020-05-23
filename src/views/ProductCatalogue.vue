@@ -78,6 +78,7 @@ export default {
 			showToast: 'showToast',
 			toCheckout: 'toCheckout',
 			onError: 'onError',
+			setPriceList: 'setPriceList',
 		}),
 		info() {
 			return this.$ionic.alertController
@@ -90,6 +91,18 @@ export default {
 				})
 				.then(a => a.present())
 		},
+		priceListToStore() {
+			this.$apollo
+				.query({
+					query: require('../graphql/products.gql'),
+				})
+				.then(response => {
+					this.setPriceList(response.data.products)
+				})
+		},
+	},
+	mounted() {
+		this.priceListToStore()
 	},
 }
 </script>
