@@ -10,17 +10,9 @@
 		</ion-header>
 		<ion-content class="ion-padding">
 			<ion-list>
-				<ApolloQuery :query="require('../graphql/products.gql')">
-					<template v-slot="{ result: { loading, error, data } }">
-						<div v-if="loading">Loading in data</div>
-						<div v-if="error">{{ error }}</div>
-						<div v-if="data">
-							<div v-for="product in data.products" :key="product.id">
-								<ProductItem v-bind:product="product" />
-							</div>
-						</div>
-					</template>
-				</ApolloQuery>
+				<div v-for="product in this.products" :key="product.id">
+					<ProductItem v-bind:product="product" />
+				</div>
 			</ion-list>
 		</ion-content>
 		<ion-footer>
@@ -45,6 +37,11 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 import ProductItem from '../components/ProductItem'
 export default {
 	name: 'ProductCatalogue',
+	data() {
+		return {
+			error: null,
+		}
+	},
 	components: {
 		ProductItem,
 	},
@@ -56,10 +53,19 @@ export default {
 			sumTotal: 'getSumTotal',
 		}),
 	},
+	apollo: {
+		products: {
+			query: require('../graphql/products.gql'),
+			error(error) {
+				this.onError(error.message)
+			},
+		},
+	},
 	methods: {
 		...mapActions({
 			showToast: 'showToast',
 			toCheckout: 'toCheckout',
+			onError: 'onError',
 		}),
 	},
 }
