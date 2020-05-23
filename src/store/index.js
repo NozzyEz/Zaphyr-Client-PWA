@@ -64,7 +64,7 @@ export default new Vuex.Store({
 			await toast.present()
 		},
 		onError (context, err) {
-			if (err.includes('GraphQL error: User not signed in')) {
+			if (err.message.includes('GraphQL error: User not signed in')) {
 				router.push({ name: 'SignIn' })
 				context.dispatch('clearUser')
 			}

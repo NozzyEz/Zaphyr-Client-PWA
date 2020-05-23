@@ -142,6 +142,7 @@ export default {
 			toCheckout: 'toCheckout',
 			updateBasket: 'updateBasket',
 			removeFromBasket: 'removeFromBasket',
+			onError: 'onError',
 		}),
 		getProduct() {
 			this.$apollo
@@ -153,6 +154,10 @@ export default {
 				})
 				.then(data => {
 					this.product = data.data.product
+				})
+				.catch(error => {
+					this.onError(error)
+					this.$router.push({ name: 'ProductCatalogue' })
 				})
 		},
 		isAdded(pid) {

@@ -86,6 +86,7 @@ export default {
 			showToast: 'showToast',
 			updateBasket: 'updateBasket',
 			removeFromBasket: 'removeFromBasket',
+			onError: 'onError',
 		}),
 		// deleteFromOrder(id) {},
 		getProduct() {
@@ -98,6 +99,9 @@ export default {
 				})
 				.then(data => {
 					this.product = data.data.product
+				})
+				.catch(error => {
+					this.onError(error)
 				})
 		},
 		updateProduct(product, newValue, oldValue) {

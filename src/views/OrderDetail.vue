@@ -52,6 +52,7 @@
 
 <script>
 import ReceiptItem from '../components/ReceiptItem'
+import { mapActions } from 'vuex'
 import { addIcons } from 'ionicons'
 import { chevronDown } from 'ionicons/icons'
 
@@ -75,6 +76,9 @@ export default {
 		},
 	},
 	methods: {
+		...mapActions({
+			onError: 'onError',
+		}),
 		getOrder() {
 			this.$apollo
 				.query({
@@ -85,6 +89,10 @@ export default {
 				})
 				.then(data => {
 					this.order = data.data.order
+				})
+				.catch(error => {
+					this.onError(error)
+					this.goBack()
 				})
 		},
 		findDate(datetime) {

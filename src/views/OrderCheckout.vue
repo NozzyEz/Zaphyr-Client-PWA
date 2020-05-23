@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import CheckoutItem from '../components/CheckoutItem'
 export default {
 	name: 'OrderCheckout',
@@ -59,6 +59,9 @@ export default {
 		}),
 	},
 	methods: {
+		...mapActions({
+			onError: 'onError',
+		}),
 		finalizeOrder(paymentType) {
 			// TODO Check if basket has content
 
@@ -119,7 +122,7 @@ export default {
 					)
 				})
 				.catch(error => {
-					console.log(error)
+					this.onError(error)
 				})
 		},
 	},

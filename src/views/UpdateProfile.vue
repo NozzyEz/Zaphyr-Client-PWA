@@ -14,69 +14,41 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						<ApolloMutation
-							:mutation="require('../graphql/updateUser.gql')"
-							:variables="{
-								id: parseInt(userId),
-								firstName,
-								lastName,
-								username,
-								email,
-							}"
-							@done="onDone"
-						>
-							<template v-slot="{ loading, error, mutate }">
-								<form @submit.prevent="mutate">
-									<ion-input
-										:value="firstName"
-										@input="firstName = $event.target.value"
-										placeholder="Fornavn"
-										type="firstName"
-										id="firstName"
-									/>
-									<ion-input
-										:value="lastName"
-										@input="lastName = $event.target.value"
-										placeholder="Efternavn"
-										type="lastName"
-										id="lastName"
-									/>
-									<ion-input
-										:value="username"
-										@input="username = $event.target.value"
-										placeholder="Focus nummer"
-										type="username"
-										id="username"
-									/>
-									<ion-input
-										:value="email"
-										@input="email = $event.target.value"
-										placeholder="Email"
-										type="email"
-										id="email"
-									/>
-									<ion-button @click="mutate()" expand="block">Gem</ion-button>
-									<h3 v-if="error">{{ error }}</h3>
-									<h3 v-if="loading">Loading</h3>
-								</form>
-							</template>
-						</ApolloMutation>
+						<form @submit.prevent="mutate">
+							<ion-input
+								:value="firstName"
+								@input="firstName = $event.target.value"
+								placeholder="Fornavn"
+								type="firstName"
+								id="firstName"
+							/>
+							<ion-input
+								:value="lastName"
+								@input="lastName = $event.target.value"
+								placeholder="Efternavn"
+								type="lastName"
+								id="lastName"
+							/>
+							<ion-input
+								:value="username"
+								@input="username = $event.target.value"
+								placeholder="Focus nummer"
+								type="username"
+								id="username"
+							/>
+							<ion-input
+								:value="email"
+								@input="email = $event.target.value"
+								placeholder="Email"
+								type="email"
+								id="email"
+							/>
+							<ion-button @click="updateUser()" expand="block">Gem</ion-button>
+						</form>
 					</ion-col>
 				</ion-row>
-			</ion-grid>
-		</ion-content>
-		<ion-footer>
-			<div class="ion-padding">
-				<ApolloMutation
-					:mutation="require('../graphql/updateUser.gql')"
-					:variables="{
-						id: parseInt(userId),
-						password,
-						passwordConfirmation,
-					}"
-					@done="onDone"
-				>
-					<template v-slot="{ loading, error, mutate }">
+				<ion-row>
+					<ion-col>
 						<form @submit.prevent="mutate">
 							<ion-input
 								:value="password"
@@ -92,15 +64,16 @@
 								type="password"
 								id="passwordConfirmation"
 							/>
-							<ion-button @click="mutate()" expand="block"
+							<ion-button @click="updatePassword()" expand="block"
 								>Opdater Password</ion-button
 							>
-							<h3 v-if="error">{{ error }}</h3>
-							<h3 v-if="loading">Loading</h3>
 						</form>
-					</template>
-				</ApolloMutation>
-			</div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-content>
+		<ion-footer>
+			<div class="ion-padding"></div>
 		</ion-footer>
 	</div>
 </template>
@@ -123,19 +96,61 @@ export default {
 	methods: {
 		...mapActions({
 			showToast: 'showToast',
+			onError: 'onError',
 		}),
-		onDone(val) {
-			//TODO: Write the method to save the variables to localStorage
-			localStorage.authenticationToken =
-				val.data.updateUser.user.authenticationToken
-			localStorage.uid = val.data.updateUser.user.id
-			localStorage.email = val.data.updateUser.user.email
-			localStorage.username = val.data.updateUser.user.username
-			localStorage.firstName = val.data.updateUser.user.firstName
-			localStorage.lastName = val.data.updateUser.user.lastName
+		updateUser() {
+			this.$apollo
+				.mutate({
+					mutation: require('../graphql/updateUser.gql'),
+					variables: {
+						id: parseInt(this.userId),
+						firstName: this.firstName,
+						lastName: this.lastName,
+						username: this.username,
+						email: this.email,
+					},
+				})
+				.then(response => {
+					localStorage.authenticationToken =
+						response.data.updateUser.user.authenticationToken
+					localStorage.uid = response.data.updateUser.user.id
+					localStorage.email = response.data.updateUser.user.email
+					localStorage.username = response.data.updateUser.user.username
+					localStorage.firstName = response.data.updateUser.user.firstName
+					localStorage.lastName = response.data.updateUser.user.lastName
 
-			this.showToast('Bruger er opdateret')
-			this.$router.push({ name: 'OrderHistory' })
+					this.$router.push({ name: 'OrderHistory' })
+					this.showToast('Bruger er opdateret')
+				})
+				.catch(error => {
+					this.onError(error)
+				})
+		},
+		updatePassword() {
+			this.$apollo
+				.mutate({
+					mutation: require('../graphql/updateUser.gql'),
+					variables: {
+						id: parseInt(this.userId),
+						password: this.password,
+						passwordConfirmation: this.passwordConfirmation,
+					},
+				})
+				.then(response => {
+					localStorage.authenticationToken =
+						response.data.updateUser.user.authenticationToken
+					localStorage.uid = response.data.updateUser.user.id
+					localStorage.email = response.data.updateUser.user.email
+					localStorage.username = response.data.updateUser.user.username
+					localStorage.firstName = response.data.updateUser.user.firstName
+					localStorage.lastName = response.data.updateUser.user.lastName
+
+					this.$router.push({ name: 'OrderHistory' })
+					this.showToast('Password er opdateret')
+				})
+				.catch(error => {
+					this.onError(error)
+				})
 		},
 	},
 }
