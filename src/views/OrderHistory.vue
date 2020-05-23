@@ -26,18 +26,9 @@
 					</ion-col>
 				</ion-item>
 			</ion-grid>
-
-			<ApolloQuery :query="require('../graphql/orders.gql')">
-				<template v-slot="{ result: { loading, error, data } }">
-					<div v-if="loading">Loading in data</div>
-					<div v-if="error">{{ error }}</div>
-					<div v-if="data">
-						<div v-for="order in data.orders" :key="order.id">
-							<OrderItem v-bind:order="order" />
-						</div>
-					</div>
-				</template>
-			</ApolloQuery>
+			<div v-for="order in this.orders" :key="order.id">
+				<OrderItem v-bind:order="order" />
+			</div>
 		</ion-content>
 		<ion-footer>
 			<div class="ion-padding">
@@ -78,42 +69,35 @@ export default {
 				name: localStorage.firstName + ' ' + localStorage.lastName,
 				authToken: localStorage.authenticationToken,
 				email: localStorage.email,
+				error: null,
 			},
 		}
 	},
 	components: {
 		OrderItem,
 	},
+	apollo: {
+		orders: {
+			query: require('../graphql/orders.gql'),
+			error(error) {
+				this.onError(error.message)
+			},
+		},
+	},
 	methods: {
 		...mapActions({
 			showToast: 'showToast',
 			setPriceList: 'setPriceList',
+			onError: 'onError',
+			clearUser: 'clearUser',
 		}),
 		newOrder() {
 			this.$router.push({ name: 'ProductCatalogue' })
 		},
-		clearUser() {
-			delete localStorage.authenticationToken
-			delete localStorage.username
-			delete localStorage.firstName
-			delete localStorage.lastName
-			delete localStorage.email
-		},
 		logOut() {
 			this.clearUser()
+			this.showToast('Du er nu logget ud')
 			this.$router.push({ name: 'SignIn' })
-		},
-		onError(error) {
-			if (error == null) {
-				return
-			} else {
-				console.log(error.message)
-				if (error.message.includes('GraphQL error: User not signed in')) {
-					this.$router.push({ name: 'SignIn' })
-					this.clearUser()
-				}
-			}
-			return error
 		},
 		priceListToStore() {
 			this.$apollo

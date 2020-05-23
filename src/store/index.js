@@ -63,7 +63,11 @@ export default new Vuex.Store({
 			})
 			await toast.present()
 		},
-		onError (state, err) {
+		onError (context, err) {
+			if (err.includes('GraphQL error: User not signed in')) {
+				router.push({ name: 'SignIn' })
+				context.dispatch('clearUser')
+			}
 			return this._vm.$ionic.alertController
 				.create({
 					header: 'Fejl',
@@ -71,6 +75,13 @@ export default new Vuex.Store({
 					buttons: [ 'OK' ]
 				})
 				.then((a) => a.present())
+		},
+		clearUser () {
+			delete localStorage.authenticationToken
+			delete localStorage.username
+			delete localStorage.firstName
+			delete localStorage.lastName
+			delete localStorage.email
 		},
 		updateBasket (context, payload) {
 			context.commit('UPDATE_BASKET', payload)
