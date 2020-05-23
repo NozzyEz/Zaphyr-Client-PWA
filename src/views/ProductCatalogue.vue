@@ -14,6 +14,11 @@
 					<ProductItem v-bind:product="product" />
 				</div>
 			</ion-list>
+			<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+				<ion-fab-button @click="info">
+					<ion-icon name="help"></ion-icon>
+				</ion-fab-button>
+			</ion-fab>
 		</ion-content>
 		<ion-footer>
 			<ion-grid>
@@ -35,6 +40,13 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import ProductItem from '../components/ProductItem'
+import { addIcons } from 'ionicons'
+import { helpCircle } from 'ionicons/icons'
+
+addIcons({
+	'ios-help': helpCircle,
+	'md-help': helpCircle,
+})
 export default {
 	name: 'ProductCatalogue',
 	data() {
@@ -67,6 +79,17 @@ export default {
 			toCheckout: 'toCheckout',
 			onError: 'onError',
 		}),
+		info() {
+			return this.$ionic.alertController
+				.create({
+					header: 'Information',
+					subHeader: 'Sådan bruges denne menu',
+					message:
+						'Elementerne på denne skærm kan swipes til venstre for at tilføje til ordre, eller til højre for at få mere information',
+					buttons: ['OK'],
+				})
+				.then(a => a.present())
+		},
 	},
 }
 </script>
