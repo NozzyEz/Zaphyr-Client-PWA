@@ -4,46 +4,32 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col>
-						<ApolloMutation
-							:mutation="require('../graphql/signIn.gql')"
-							:variables="{ email, password }"
-							@done="onDone"
-						>
-							<template v-slot="{ loading, error, mutate }">
-								<form @submit.prevent="mutate">
-									<div>
-										<ion-input
-											:value="email"
-											@input="email = $event.target.value"
-											placeholder="Email"
-											type="email"
-											id="email"
-										/>
-										<ion-input
-											:value="password"
-											@input="password = $event.target.value"
-											placeholder="password"
-											type="password"
-											id="password"
-										/>
-									</div>
-									<ion-button @click="mutate()" expand="block"
-										>log Ind</ion-button
-									>
-									<ion-button
-										@click="$router.push({ name: 'RegisterUser' })"
-										color="primary"
-										fill="outline"
-										expand="block"
-										>Opret Bruger</ion-button
-									>
-									<h3 v-if="error">{{ error }}</h3>
-									<h3 v-if="loading" v-on="onLoad()">
-										{{ loading }}
-									</h3>
-								</form>
-							</template>
-						</ApolloMutation>
+						<form @submit.prevent="mutate">
+							<div>
+								<ion-input
+									:value="email"
+									@input="email = $event.target.value"
+									placeholder="Email"
+									type="email"
+									id="email"
+								/>
+								<ion-input
+									:value="password"
+									@input="password = $event.target.value"
+									placeholder="password"
+									type="password"
+									id="password"
+								/>
+							</div>
+							<ion-button @click="signIn()" expand="block">log Ind</ion-button>
+							<ion-button
+								@click="$router.push({ name: 'RegisterUser' })"
+								color="primary"
+								fill="outline"
+								expand="block"
+								>Opret Bruger</ion-button
+							>
+						</form>
 					</ion-col>
 				</ion-row>
 				<ion-row>
@@ -73,6 +59,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
 	name: 'SignIn',
 	data() {
@@ -83,17 +70,30 @@ export default {
 	},
 	watch: {},
 	methods: {
-		onDone(val) {
-			// alert('worked')
-			// Save the token in variable before sending it on to localStorage
-			localStorage.authenticationToken = val.data.signIn.authenticationToken
-			localStorage.uid = val.data.signIn.user.id
-			localStorage.email = val.data.signIn.user.email
-			localStorage.username = val.data.signIn.user.username
-			localStorage.firstName = val.data.signIn.user.firstName
-			localStorage.lastName = val.data.signIn.user.lastName
+		...mapActions({ onError: 'onError' }),
+		signIn() {
+			this.$apollo
+				.mutate({
+					mutation: require('../graphql/signIn.gql'),
+					variables: {
+						email: this.email,
+						password: this.password,
+					},
+				})
+				.then(response => {
+					localStorage.authenticationToken =
+						response.data.signIn.authenticationToken
+					localStorage.uid = response.data.signIn.user.id
+					localStorage.email = response.data.signIn.user.email
+					localStorage.username = response.data.signIn.user.username
+					localStorage.firstName = response.data.signIn.user.firstName
+					localStorage.lastName = response.data.signIn.user.lastName
 
-			this.$router.push({ name: 'OrderHistory' })
+					this.$router.push({ name: 'OrderHistory' })
+				})
+				.catch(error => {
+					this.onError(error)
+				})
 		},
 		onLoad() {
 			return this.$ionic.loadingController

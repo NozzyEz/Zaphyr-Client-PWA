@@ -95,9 +95,6 @@ export default {
 						passwordConfirmation: this.passwordConfirmation,
 						verificationCode: this.verificationCode,
 					},
-					// error(error) {
-					// 	console.log(error)
-					// },
 				})
 				.then(response => {
 					localStorage.authenticationToken =
