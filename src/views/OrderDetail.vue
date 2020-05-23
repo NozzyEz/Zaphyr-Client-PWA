@@ -22,7 +22,7 @@
 							<ion-label>Ikke betalt</ion-label>
 						</ion-chip>
 						<ion-chip v-if="order.paid == null" color="warning">
-							<ion-label>Afventer</ion-label>
+							<ion-label>Afventer Godkendelse</ion-label>
 						</ion-chip>
 					</ion-card-subtitle>
 					<ion-card-title>
