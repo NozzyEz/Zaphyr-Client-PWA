@@ -12,50 +12,39 @@
 			</ion-toolbar>
 		</ion-header>
 		<ion-content v-if="orderId">
-			<ApolloQuery
-				:query="require('../graphql/order.gql')"
-				:variables="{ id: orderId }"
-			>
-				<template v-slot="{ result: { loading, error, data } }">
-					<div v-if="loading">Loading in data</div>
-					<div v-if="error">{{ error }}</div>
-					<div v-if="data">
-						<ion-card>
-							<ion-card-header>
-								<ion-card-subtitle>
-									<ion-chip v-if="data.order.paid == true" color="success">
-										<ion-label>Betalt</ion-label>
-									</ion-chip>
-									<ion-chip v-if="data.order.paid == false" color="danger">
-										<ion-label>Ikke betalt</ion-label>
-									</ion-chip>
-									<ion-chip v-if="data.order.paid == null" color="warning">
-										<ion-label>Afventer</ion-label>
-									</ion-chip>
-								</ion-card-subtitle>
-								<ion-card-title>
-									{{ findDate(data.order.createdAt) }}
-								</ion-card-title>
-							</ion-card-header>
-							<ion-card-content>
-								<ion-grid>
-									<ReceiptItem v-bind:order="data.order" />
-									<ion-row>
-										<ion-col>Betalt med: {{ data.order.paymentType }}</ion-col>
-										<ion-col
-											><div class="ion-text-end">
-												<strong>
-													total: {{ calculateCost(data.order.products) }} DKK
-												</strong>
-											</div></ion-col
-										>
-									</ion-row>
-								</ion-grid>
-							</ion-card-content>
-						</ion-card>
-					</div>
-				</template>
-			</ApolloQuery>
+			<ion-card>
+				<ion-card-header>
+					<ion-card-subtitle>
+						<ion-chip v-if="order.paid == true" color="success">
+							<ion-label>Betalt</ion-label>
+						</ion-chip>
+						<ion-chip v-if="order.paid == false" color="danger">
+							<ion-label>Ikke betalt</ion-label>
+						</ion-chip>
+						<ion-chip v-if="order.paid == null" color="warning">
+							<ion-label>Afventer</ion-label>
+						</ion-chip>
+					</ion-card-subtitle>
+					<ion-card-title>
+						{{ findDate(order.createdAt) }}
+					</ion-card-title>
+				</ion-card-header>
+				<ion-card-content>
+					<ion-grid>
+						<ReceiptItem v-bind:order="order" />
+						<ion-row>
+							<ion-col>Betalt med: {{ order.paymentType }}</ion-col>
+							<ion-col
+								><div class="ion-text-end">
+									<strong>
+										total: {{ calculateCost(order.products) }} DKK
+									</strong>
+								</div></ion-col
+							>
+						</ion-row>
+					</ion-grid>
+				</ion-card-content>
+			</ion-card>
 		</ion-content>
 		<ion-footer> </ion-footer>
 	</div>
@@ -76,7 +65,9 @@ export default {
 		ReceiptItem,
 	},
 	data() {
-		return {}
+		return {
+			order: {},
+		}
 	},
 	computed: {
 		orderId() {
@@ -84,6 +75,18 @@ export default {
 		},
 	},
 	methods: {
+		getOrder() {
+			this.$apollo
+				.query({
+					query: require('../graphql/order.gql'),
+					variables: {
+						id: this.orderId,
+					},
+				})
+				.then(data => {
+					this.order = data.data.order
+				})
+		},
 		findDate(datetime) {
 			// console.log(this.order.createdAt)
 			const computedDate = new Date(datetime).toDateString()
@@ -100,6 +103,10 @@ export default {
 		goBack() {
 			this.$router.push({ name: 'OrderHistory' })
 		},
+	},
+	mounted() {
+		// console.log(this.product)
+		this.getOrder()
 	},
 }
 </script>
