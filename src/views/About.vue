@@ -9,6 +9,9 @@
 			</ion-toolbar>
 		</ion-header>
 		<ion-content>
+			<div class="vertical-center">
+				<img src="../assets/logo.png" width="150" height="150" />
+			</div>
 			<ion-card>
 				<ion-card-header>
 					<ion-card-subtitle>
@@ -47,5 +50,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.vertical-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 </style>
