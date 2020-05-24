@@ -2,7 +2,7 @@
 	<div class="ion-page">
 		<ion-header>
 			<ion-toolbar>
-				<ion-title>Order History</ion-title>
+				<ion-title>Ordrehistorik</ion-title>
 				<ion-buttons slot="end">
 					<ion-button @click="$router.push({ name: 'About' })">
 						<ion-icon slot="icon-only" name="info" size="large" />
