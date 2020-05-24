@@ -15,13 +15,10 @@
 				<ion-item>
 					<ion-col></ion-col>
 					<ion-col size="8">
-						<div>
-							<ion-row>
-								{{ `Focus nummer: ${user.username}` }}
-							</ion-row>
-							<ion-row>
-								{{ `Navn: ${user.name}` }}
-							</ion-row>
+						<div class="ion-text-end">
+							{{ `Focus nummer: ${user.username}` }}
+							<br />
+							{{ `Navn: ${user.name}` }}
 						</div>
 					</ion-col>
 				</ion-item>
