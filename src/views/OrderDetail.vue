@@ -6,7 +6,6 @@
 					<ion-button fill="clear" @click="goBack()" size="large">
 						<ion-icon name="arrow-back"></ion-icon>
 					</ion-button>
-					<!-- <ion-back-button defaultHref="OrderHistory"></ion-back-button> -->
 				</ion-buttons>
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
 			</ion-toolbar>
@@ -46,7 +45,6 @@
 				</ion-card-content>
 			</ion-card>
 		</ion-content>
-		<ion-footer> </ion-footer>
 	</div>
 </template>
 
@@ -67,24 +65,21 @@ export default {
 	},
 	data() {
 		return {
+			orderId: null,
 			order: {},
 		}
 	},
-	computed: {
-		orderId() {
-			return this.$store.state.activeOrder
-		},
-	},
+	computed: {},
 	methods: {
 		...mapActions({
 			onError: 'onError',
 		}),
-		getOrder() {
+		getOrder(id) {
 			this.$apollo
 				.query({
 					query: require('../graphql/order.gql'),
 					variables: {
-						id: this.orderId,
+						id,
 					},
 				})
 				.then(data => {
@@ -92,6 +87,7 @@ export default {
 					console.log(data)
 				})
 				.catch(error => {
+					console.log(error)
 					this.onError(error)
 					this.goBack()
 				})
@@ -114,8 +110,9 @@ export default {
 		},
 	},
 	mounted() {
+		this.orderId = this.$store.state.activeOrder
 		// console.log(this.product)
-		this.order = this.getOrder()
+		this.order = this.getOrder(this.orderId)
 	},
 }
 </script>

@@ -77,6 +77,7 @@ export default {
 		orders: {
 			query: require('../graphql/orders.gql'),
 			error(error) {
+				console.log(error)
 				this.onError(error.message)
 			},
 		},
