@@ -1,12 +1,12 @@
 {
 	"hosting": {
 		"site": "zaphyr-pwa",
-		"public": "/dist",
+		"public": "dist",
 		"ignore": [ "firebase.json", "**/.*", "**/node_modules/**" ],
 		"rewrites": [
 			{
 				"source": "**",
-				"destination": "/"
+				"destination": "/index.html"
 			}
 		]
 	}
