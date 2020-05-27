@@ -10,7 +10,7 @@
 				<ion-title> Bestilling: {{ orderId }} </ion-title>
 			</ion-toolbar>
 		</ion-header>
-		<ion-content v-if="orderId">
+		<ion-content v-if="orderId && order !== null">
 			<ion-card>
 				<ion-card-header>
 					<ion-card-subtitle>
@@ -66,7 +66,7 @@ export default {
 	data() {
 		return {
 			orderId: null,
-			order: {},
+			order: null,
 		}
 	},
 	computed: {},

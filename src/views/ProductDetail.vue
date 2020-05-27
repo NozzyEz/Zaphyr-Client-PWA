@@ -11,7 +11,7 @@
 			</ion-toolbar>
 		</ion-header>
 		<ion-content>
-			<ion-card>
+			<ion-card v-if="product !== null">
 				<img
 					v-if="this.product.images.find(i => i.productId == this.product.id)"
 					:src="
@@ -108,7 +108,7 @@ export default {
 	name: 'ProductDetail',
 	data() {
 		return {
-			product: {},
+			product: null,
 			pid: parseInt(this.$store.state.activeProduct),
 			total: this.$store.state.sumTotal,
 		}
